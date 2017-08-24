@@ -12,6 +12,7 @@
         <module>iextrading4j-hist-api</module>
         <module>iextrading4j-hist-tops</module>
         <module>iextrading4j-hist-samples</module>
+        <module>iextrading4j-hist-deep</module>
     </modules>
 
     <properties>
@@ -32,6 +33,12 @@
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-tops</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.zankowski</groupId>
+                <artifactId>iextrading4j-hist-deep</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
