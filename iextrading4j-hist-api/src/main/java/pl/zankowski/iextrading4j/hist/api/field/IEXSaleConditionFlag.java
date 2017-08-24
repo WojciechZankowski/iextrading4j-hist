@@ -1,4 +1,4 @@
-package pl.zankowski.iextrading4j.hist.tops.field;
+package pl.zankowski.iextrading4j.hist.api.field;
 
 /**
  * @author Wojciech Zankowski

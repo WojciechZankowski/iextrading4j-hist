@@ -1,10 +1,9 @@
-package pl.zankowski.iextrading4j.hist.tops.message;
+package pl.zankowski.iextrading4j.hist.api.message;
 
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
-import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
-import pl.zankowski.iextrading4j.hist.tops.field.IEXSaleConditionFlag;
+import pl.zankowski.iextrading4j.hist.api.field.IEXSaleConditionFlag;
 
 import java.util.Arrays;
 
@@ -101,7 +100,7 @@ public class IEXTradeMessage extends IEXMessage {
 
     @Override
     public String toString() {
-        return "pl.zankowski.iextrading4j.hist.tops.message.IEXTradeMessage{" +
+        return "pl.zankowski.iextrading4j.hist.api.message.IEXTradeMessage{" +
                 "iexMessageType=" + iexMessageType +
                 ", iexSaleConditionFlag=" + iexSaleConditionFlag +
                 ", timestamp=" + timestamp +

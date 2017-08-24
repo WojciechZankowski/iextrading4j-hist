@@ -6,7 +6,7 @@ import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.tops.message.IEXQuoteUpdateMessage;
-import pl.zankowski.iextrading4j.hist.tops.message.IEXTradeMessage;
+import pl.zankowski.iextrading4j.hist.api.message.IEXTradeMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;

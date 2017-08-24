@@ -9,27 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>iextrading4j-hist-samples</artifactId>
+    <artifactId>iextrading4j-hist-deep</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>pl.zankowski</groupId>
-            <artifactId>iextrading4j-hist-tops</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>pl.zankowski</groupId>
-            <artifactId>iextrading4j-hist-deep</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.pkts</groupId>
-            <artifactId>pkts-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.pkts</groupId>
-            <artifactId>pkts-streams</artifactId>
+            <artifactId>iextrading4j-hist-api</artifactId>
         </dependency>
     </dependencies>
 
