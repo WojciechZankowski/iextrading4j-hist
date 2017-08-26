@@ -33,12 +33,7 @@ public class IEXByteConverter {
     }
 
     public static IEXPrice convertBytesToIEXPrice(byte[] bytes) {
-        int value = convertBytesToInt(bytes);
-        String number = String.format("%08d", value);
-        return new IEXPrice(
-                Integer.parseInt(number.substring(0, number.length() - 4)),
-                Integer.parseInt(number.substring(number.length() - 4, number.length()))
-        );
+        return new IEXPrice(convertBytesToLong(bytes));
     }
 
 }
