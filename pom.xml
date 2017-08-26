@@ -8,6 +8,32 @@
     <artifactId>iextrading4j-hist</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <name>IEXTrading4j HIST</name>
+    <description>IEX Trading library to parse TOPS and DEEP multicast packets</description>
+    <url>https://github.com/WojciechZankowski/iextrading4j-hist.git</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>WojciechZankowski</id>
+            <name>Wojciech Zankowski</name>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/WojciechZankowski/iextrading4j-hist.git</connection>
+        <developerConnection>scm:git:git@github.com:WojciechZankowski/iextrading4j-hist.git</developerConnection>
+        <url>https://github.com/WojciechZankowski/iextrading4j-hist</url>
+        <tag>master</tag>
+    </scm>
+
     <modules>
         <module>iextrading4j-hist-api</module>
         <module>iextrading4j-hist-tops</module>
@@ -20,6 +46,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
+        <maven.gpg.plugin>1.6</maven.gpg.plugin>
+        <maven.source.plugin>3.0.1</maven.source.plugin>
+        <maven.jar.plugin>3.0.2</maven.jar.plugin>
+        <maven.javadoc.plugin>2.10.4</maven.javadoc.plugin>
+        <nexus.staging.maven.plugin>1.6.8</nexus.staging.maven.plugin>
+        <maven.clean.plugin>3.0.0</maven.clean.plugin>
+        <jacoco.maven.plugin>0.7.9</jacoco.maven.plugin>
     </properties>
 
     <dependencyManagement>
@@ -47,20 +80,6 @@
                 <artifactId>iextrading4j-hist-samples</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
-            <dependency>
-                <groupId>io.pkts</groupId>
-                <artifactId>pkts-core</artifactId>
-                <version>3.0.0</version>
-                <type>jar</type>
-            </dependency>
-
-            <dependency>
-                <groupId>io.pkts</groupId>
-                <artifactId>pkts-streams</artifactId>
-                <version>3.0.0</version>
-                <type>jar</type>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -76,8 +95,133 @@
                         <target>${maven.compiler.target}</target>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar.plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven.clean.plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven.source.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven.javadoc.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.maven.plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

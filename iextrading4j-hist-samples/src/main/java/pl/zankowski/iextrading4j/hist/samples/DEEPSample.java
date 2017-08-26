@@ -1,35 +1,42 @@
 package pl.zankowski.iextrading4j.hist.samples;
 
-import io.pkts.Pcap;
-import io.pkts.packet.Packet;
-import io.pkts.protocol.Protocol;
+import org.pcap4j.core.NotOpenException;
+import org.pcap4j.core.PacketListener;
+import org.pcap4j.core.PcapHandle;
+import org.pcap4j.core.PcapNativeException;
+import org.pcap4j.core.Pcaps;
+import org.pcap4j.packet.Packet;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.deep.IEXDEEPMessageBlock;
-
-import java.io.IOException;
 
 /**
  * @author Wojciech Zankowski
  */
 public class DEEPSample {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws PcapNativeException, InterruptedException, NotOpenException {
         DEEPSample deepSample = new DEEPSample();
         deepSample.readDEEPsample();
     }
 
-    private void readDEEPsample() throws IOException {
-        final Pcap pcap = Pcap.openStream("path_to_pcap_file");
-
-        pcap.loop(this::onPacketRead);
-    }
-
-    private boolean onPacketRead(final Packet packet) throws IOException {
-        if (packet.hasProtocol(Protocol.UDP)) {
-            IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(packet.getPacket(Protocol.UDP).getPayload().getArray());
-            System.out.println(block);
+    private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
+        PcapHandle handle;
+        try {
+            handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+        } catch (PcapNativeException e) {
+            handle = Pcaps.openOffline("path_to_pcap");
         }
-        return true;
-    }
 
+        handle.loop(-1, new PacketListener() {
+            @Override
+            public void gotPacket(Packet packet) {
+                byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
+                IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(data);
+                System.out.println(block);
+            }
+        });
+
+
+        handle.close();
+    }
 }

@@ -23,13 +23,21 @@
         </dependency>
 
         <dependency>
-            <groupId>io.pkts</groupId>
-            <artifactId>pkts-core</artifactId>
+            <groupId>org.pcap4j</groupId>
+            <artifactId>pcap4j-core</artifactId>
+            <version>1.7.1</version>
         </dependency>
 
         <dependency>
-            <groupId>io.pkts</groupId>
-            <artifactId>pkts-streams</artifactId>
+            <groupId>org.pcap4j</groupId>
+            <artifactId>pcap4j-packetfactory-static</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
         </dependency>
     </dependencies>
 
