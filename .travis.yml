@@ -1,15 +1,11 @@
 language: java
 sudo: false
 
-addons:
-  sonarqube:
-    organization: "wojciechzankowski-github"
-
 jdk:
 - oraclejdk8
 
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
