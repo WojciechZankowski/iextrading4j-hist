@@ -5,7 +5,11 @@
 ## Table of Contents
 
 * [Quick Start](#quick-start)
+* [Description](#description)  
 * [IEX Trading](#iex-trading)
+  * [DEEP](#deep)
+  * [TOPS](#tops)
+* [Sample](#sample)
   * [DEEP](#deep)
   * [TOPS](#tops)
 * [Roadmap](#roadmap)
@@ -19,6 +23,14 @@ Library is up to:
 
 * TOPS version 1.56 - May 9, 2017
 * DEEP version 1.04 - August 1, 2017
+
+## Description
+
+IEX Trading allows users to receive their market data completly for free. Their data can be accessed in real-time during market session or can be downloaded as recorded sessions in PCAP data format. Market Data is transported in binary format and can be read according to specification shared on their site. 
+
+This library allows you to transform binary packets into human readable Market Data events in Java.
+
+More on this topic can found here: [IEX Trading Market Data](https://www.iextrading.com/trading/market-data/)
 
 ## IEX Trading
 
@@ -49,7 +61,47 @@ TOPS is used to receive real-time top of book quotations direct from IEX. The qu
 
 TOPS also provides last trade price and size information. Trades resulting from either displayed or non-displayed orders matching on IEX will be reported. Routed executions will not be reported.
 
-[IEX Trading Market Data](https://www.iextrading.com/trading/market-data/)
+## Sample
+
+To run samples it is required to have pcap library (e.g. Npcap or WinPcap) installed on computer.
+
+### TOPS
+
+```java 
+private void readTOPSsample() throws PcapNativeException, InterruptedException, NotOpenException {
+    PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+
+    handle.loop(-1, new PacketListener() {
+        @Override
+        public void gotPacket(Packet packet) {
+            byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
+            IEXSegment block = IEXTOPSMessageBlock.createIEXSegment(data);
+            System.out.println(block);
+        }
+    });
+
+    handle.close();
+}
+```
+
+### DEEP
+
+```java
+private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
+    PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+
+    handle.loop(-1, new PacketListener() {
+        @Override
+        public void gotPacket(Packet packet) {
+            byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
+            IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(data);
+            System.out.println(block);
+        }
+    });
+
+    handle.close();
+}
+```
 
 ## Roadmap
 
