@@ -20,12 +20,7 @@ public class DEEPSample {
     }
 
     private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        PcapHandle handle;
-        try {
-            handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
-        } catch (PcapNativeException e) {
-            handle = Pcaps.openOffline("path_to_pcap");
-        }
+        PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
 
         handle.loop(-1, new PacketListener() {
             @Override
@@ -35,7 +30,6 @@ public class DEEPSample {
                 System.out.println(block);
             }
         });
-
 
         handle.close();
     }
