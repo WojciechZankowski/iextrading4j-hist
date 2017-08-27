@@ -44,7 +44,7 @@ public class IEXDEEPMessageBlock extends IEXSegment {
 
 
     private static IEXMessage resolveMessage(byte[] bytes) {
-        IEXMessageType messageType = IEXMessageType.getMessageType((char) bytes[0]);
+        IEXMessageType messageType = IEXMessageType.getMessageType(bytes[0]);
 
         switch (messageType) {
             case TRADE_REPORT:

@@ -65,6 +65,14 @@
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
+                <artifactId>iextrading4j-hist-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-tops</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -79,6 +87,27 @@
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-samples</artifactId>
                 <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>2.7.17</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.6.2</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

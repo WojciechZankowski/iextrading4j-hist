@@ -5,27 +5,27 @@ package pl.zankowski.iextrading4j.hist.api;
  */
 public enum IEXMessageType {
 
-    QUOTE_UPDATE('Q'),
-    TRADE_REPORT('T'),
-    TRADE_BREAK('B'),
-    SYSTEM_EVENT('S'),
-    SECURITY_DIRECTORY('D'),
-    TRADING_STATUS('H'),
-    OPERATIONAL_HALT_STATUS('O'),
-    SHORT_SALE_PRICE_TEST_STATUS('P'),
-    SECURITY_EVENT('E'),
-    PRICE_LEVEL_UPDATE_BUY('8'),
-    PRICE_LEVEL_UPDATE_SELL('5'),
-    AUCTION_INFORMATION('A'),
-    UNKNOWN(' ');
+    QUOTE_UPDATE((byte) 0x51),
+    TRADE_REPORT((byte) 0x54),
+    TRADE_BREAK((byte) 0x42),
+    SYSTEM_EVENT((byte) 0x53),
+    SECURITY_DIRECTORY((byte) 0x44),
+    TRADING_STATUS((byte) 0x48),
+    OPERATIONAL_HALT_STATUS((byte) 0x4f),
+    SHORT_SALE_PRICE_TEST_STATUS((byte) 0x50),
+    SECURITY_EVENT((byte) 0x45),
+    PRICE_LEVEL_UPDATE_BUY((byte) 0x38),
+    PRICE_LEVEL_UPDATE_SELL((byte) 0x35),
+    AUCTION_INFORMATION((byte) 0x41),
+    UNKNOWN((byte) 0x11);
 
-    private final char code;
+    private final byte code;
 
-    IEXMessageType(char code) {
+    IEXMessageType(byte code) {
         this.code = code;
     }
 
-    public static IEXMessageType getMessageType(char code) {
+    public static IEXMessageType getMessageType(byte code) {
         for (IEXMessageType iexMessageType : values()) {
             if (iexMessageType.getCode() == code) {
                 return iexMessageType;
@@ -34,7 +34,7 @@ public enum IEXMessageType {
         return IEXMessageType.UNKNOWN;
     }
 
-    public char getCode() {
+    public byte getCode() {
         return code;
     }
 

@@ -66,7 +66,37 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
 		return askSize;
 	}
 
-	public static IEXMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof IEXQuoteUpdateMessage)) return false;
+
+		IEXQuoteUpdateMessage that = (IEXQuoteUpdateMessage) o;
+
+		if (timestamp != that.timestamp) return false;
+		if (bidSize != that.bidSize) return false;
+		if (askSize != that.askSize) return false;
+		if (messageType != that.messageType) return false;
+		if (messageFlag != that.messageFlag) return false;
+		if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
+		if (bidPrice != null ? !bidPrice.equals(that.bidPrice) : that.bidPrice != null) return false;
+		return askPrice != null ? askPrice.equals(that.askPrice) : that.askPrice == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = messageType != null ? messageType.hashCode() : 0;
+		result = 31 * result + (messageFlag != null ? messageFlag.hashCode() : 0);
+		result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
+		result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
+		result = 31 * result + bidSize;
+		result = 31 * result + (bidPrice != null ? bidPrice.hashCode() : 0);
+		result = 31 * result + (askPrice != null ? askPrice.hashCode() : 0);
+		result = 31 * result + askSize;
+		return result;
+	}
+
+	public static IEXQuoteUpdateMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
 		IEXMessageFlag messageFlag = IEXMessageFlag.getMessageFromFlag(bytes[1]);
 		long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
 		String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

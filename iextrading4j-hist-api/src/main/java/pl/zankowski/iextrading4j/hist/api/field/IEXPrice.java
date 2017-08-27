@@ -7,44 +7,44 @@ import java.math.BigDecimal;
  */
 public class IEXPrice implements Comparable<IEXPrice> {
 
-	private static final int SCALE = 4;
+    private static final int SCALE = 4;
 
-	private final long number;
+    private final long number;
 
-	public IEXPrice(long number) {
-		this.number = number;
-	}
+    public IEXPrice(long number) {
+        this.number = number;
+    }
 
-	public long getNumber() {
-		return number;
-	}
+    public long getNumber() {
+        return number;
+    }
 
-	@Override
-	public int compareTo(IEXPrice iexPrice) {
-		return this.getNumber() == iexPrice.getNumber() ? 0
-				: this.getNumber() > iexPrice.getNumber() ? 1 : -1;
-	}
+    @Override
+    public int compareTo(IEXPrice iexPrice) {
+        return this.getNumber() == iexPrice.getNumber() ? 0
+                : this.getNumber() > iexPrice.getNumber() ? 1 : -1;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof IEXPrice)) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IEXPrice)) return false;
 
-		IEXPrice iexPrice = (IEXPrice) o;
+        IEXPrice iexPrice = (IEXPrice) o;
 
-		return number == iexPrice.number;
-	}
+        return number == iexPrice.number;
+    }
 
-	@Override
-	public int hashCode() {
-		return (int) (number ^ (number >>> 32));
-	}
+    @Override
+    public int hashCode() {
+        return (int) (number ^ (number >>> 32));
+    }
 
-	@Override
-	public String toString() {
-		return BigDecimal.valueOf(number)
-				.scaleByPowerOfTen(-SCALE)
-				.toString();
-	}
+    @Override
+    public String toString() {
+        return BigDecimal.valueOf(number)
+                .scaleByPowerOfTen(-SCALE)
+                .toString();
+    }
 
 }

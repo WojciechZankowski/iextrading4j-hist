@@ -41,7 +41,7 @@ public class IEXTOPSMessageBlock extends IEXSegment {
             throw new IllegalArgumentException("IEX TOPS Message has to contain 42 bytes");
         }
 
-        IEXMessageType messageType = IEXMessageType.getMessageType((char) bytes[0]);
+        IEXMessageType messageType = IEXMessageType.getMessageType(bytes[0]);
 
         switch (messageType) {
             case QUOTE_UPDATE:

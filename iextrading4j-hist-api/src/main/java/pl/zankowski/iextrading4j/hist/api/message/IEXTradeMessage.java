@@ -2,8 +2,8 @@ package pl.zankowski.iextrading4j.hist.api.message;
 
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
-import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.api.field.IEXSaleConditionFlag;
+import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
 
@@ -29,6 +29,17 @@ public class IEXTradeMessage extends IEXMessage {
         this.size = size;
         this.price = price;
         this.tradeID = tradeID;
+    }
+
+    public static IEXTradeMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
+        IEXSaleConditionFlag iexSaleConditionFlag = IEXSaleConditionFlag.getSaleConditionFlag(bytes[1]);
+        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        int size = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
+        IEXPrice price = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
+        long tradeID = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 30, 38));
+
+        return new IEXTradeMessage(messageType, iexSaleConditionFlag, timestamp, symbol, size, price, tradeID);
     }
 
     public IEXMessageType getIexMessageType() {
@@ -57,17 +68,6 @@ public class IEXTradeMessage extends IEXMessage {
 
     public long getTradeID() {
         return tradeID;
-    }
-
-    public static IEXMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
-        IEXSaleConditionFlag iexSaleConditionFlag = IEXSaleConditionFlag.EXTENDED_HOURS_FLAG;
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-        int size = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
-        IEXPrice price = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
-        long tradeID = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 30, 38));
-
-        return new IEXTradeMessage(messageType, iexSaleConditionFlag, timestamp, symbol, size, price, tradeID);
     }
 
     @Override
