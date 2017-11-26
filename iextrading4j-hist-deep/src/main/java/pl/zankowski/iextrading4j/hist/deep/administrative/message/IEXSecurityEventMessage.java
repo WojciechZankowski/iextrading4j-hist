@@ -6,10 +6,8 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXSecurityEvent;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXSecurityEventMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -17,17 +15,21 @@ public class IEXSecurityEventMessage extends IEXMessage {
     private final long timestamp;
     private final String symbol;
 
-    public IEXSecurityEventMessage(IEXMessageType iexMessageType, IEXSecurityEvent iexSecurityEvent, long timestamp, String symbol) {
+    public IEXSecurityEventMessage(
+            final IEXMessageType iexMessageType,
+            final IEXSecurityEvent iexSecurityEvent,
+            final long timestamp,
+            final String symbol) {
         this.iexMessageType = iexMessageType;
         this.iexSecurityEvent = iexSecurityEvent;
         this.timestamp = timestamp;
         this.symbol = symbol;
     }
 
-    public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
-        IEXSecurityEvent iexSecurityEvent = IEXSecurityEvent.getSecurityEvent(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+    public static IEXMessage createIEXMessage(final IEXMessageType iexMessageType, final byte[] bytes) {
+        final IEXSecurityEvent iexSecurityEvent = IEXSecurityEvent.getSecurityEvent(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         return new IEXSecurityEventMessage(iexMessageType, iexSecurityEvent, timestamp, symbol);
     }
 
@@ -50,23 +52,17 @@ public class IEXSecurityEventMessage extends IEXMessage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXSecurityEventMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXSecurityEventMessage that = (IEXSecurityEventMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexSecurityEvent != that.iexSecurityEvent) return false;
-        return symbol != null ? symbol.equals(that.symbol) : that.symbol == null;
+        return timestamp == that.timestamp &&
+                iexMessageType == that.iexMessageType &&
+                iexSecurityEvent == that.iexSecurityEvent &&
+                Objects.equals(symbol, that.symbol);
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexSecurityEvent != null ? iexSecurityEvent.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        return result;
+        return Objects.hash(iexMessageType, iexSecurityEvent, timestamp, symbol);
     }
 
     @Override

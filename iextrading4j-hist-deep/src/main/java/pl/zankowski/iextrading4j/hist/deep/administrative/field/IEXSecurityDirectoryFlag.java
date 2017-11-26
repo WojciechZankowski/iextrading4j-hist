@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXSecurityDirectoryFlag {
 
     SYMBOL_IS_NOT_TEST((byte) 0x80),
@@ -19,7 +16,7 @@ public enum IEXSecurityDirectoryFlag {
         this.code = code;
     }
 
-    public static IEXSecurityDirectoryFlag getSecurityDirectoryFlag(byte code) {
+    public static IEXSecurityDirectoryFlag getSecurityDirectoryFlag(final byte code) {
         for (IEXSecurityDirectoryFlag iexSecurityDirectoryFlag : values()) {
             if (iexSecurityDirectoryFlag.getCode() == code) {
                 return iexSecurityDirectoryFlag;

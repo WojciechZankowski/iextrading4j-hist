@@ -8,10 +8,8 @@ import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXLULDTier;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXSecurityDirectoryFlag;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXSecurityDirectoryMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -22,8 +20,14 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     private final IEXPrice adjustedPOCPrice;
     private final IEXLULDTier iexluldTier;
 
-    public IEXSecurityDirectoryMessage(IEXMessageType iexMessageType, IEXSecurityDirectoryFlag iexSecurityDirectoryFlag,
-                                       long timestamp, String symbol, int roundLotSize, IEXPrice adjustedPOCPrice, IEXLULDTier iexluldTier) {
+    public IEXSecurityDirectoryMessage(
+            final IEXMessageType iexMessageType,
+            final IEXSecurityDirectoryFlag iexSecurityDirectoryFlag,
+            final long timestamp,
+            final String symbol,
+            final int roundLotSize,
+            final IEXPrice adjustedPOCPrice,
+            final IEXLULDTier iexluldTier) {
         this.iexMessageType = iexMessageType;
         this.iexSecurityDirectoryFlag = iexSecurityDirectoryFlag;
         this.timestamp = timestamp;
@@ -61,44 +65,34 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
         return iexluldTier;
     }
 
+    public static IEXSecurityDirectoryMessage createIEXMessage(final IEXMessageType iexMessageType, final byte[] bytes) {
+        final IEXSecurityDirectoryFlag iexSecurityDirectoryFlag = IEXSecurityDirectoryFlag.getSecurityDirectoryFlag(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final int roundLotSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
+        final IEXPrice adjustedPOCPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
+        final IEXLULDTier iexluldTier = IEXLULDTier.getLULDTier(bytes[30]);
+        return new IEXSecurityDirectoryMessage(iexMessageType, iexSecurityDirectoryFlag, timestamp, symbol, roundLotSize,
+                adjustedPOCPrice, iexluldTier);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXSecurityDirectoryMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXSecurityDirectoryMessage that = (IEXSecurityDirectoryMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (roundLotSize != that.roundLotSize) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexSecurityDirectoryFlag != that.iexSecurityDirectoryFlag) return false;
-        if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
-        if (adjustedPOCPrice != null ? !adjustedPOCPrice.equals(that.adjustedPOCPrice) : that.adjustedPOCPrice != null)
-            return false;
-        return iexluldTier == that.iexluldTier;
+        return timestamp == that.timestamp &&
+                roundLotSize == that.roundLotSize &&
+                iexMessageType == that.iexMessageType &&
+                iexSecurityDirectoryFlag == that.iexSecurityDirectoryFlag &&
+                Objects.equals(symbol, that.symbol) &&
+                Objects.equals(adjustedPOCPrice, that.adjustedPOCPrice) &&
+                iexluldTier == that.iexluldTier;
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexSecurityDirectoryFlag != null ? iexSecurityDirectoryFlag.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        result = 31 * result + roundLotSize;
-        result = 31 * result + (adjustedPOCPrice != null ? adjustedPOCPrice.hashCode() : 0);
-        result = 31 * result + (iexluldTier != null ? iexluldTier.hashCode() : 0);
-        return result;
-    }
-
-    public static IEXSecurityDirectoryMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
-        IEXSecurityDirectoryFlag iexSecurityDirectoryFlag = IEXSecurityDirectoryFlag.getSecurityDirectoryFlag(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-        int roundLotSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
-        IEXPrice adjustedPOCPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
-        IEXLULDTier iexluldTier = IEXLULDTier.getLULDTier(bytes[30]);
-        return new IEXSecurityDirectoryMessage(iexMessageType, iexSecurityDirectoryFlag, timestamp, symbol, roundLotSize,
-                adjustedPOCPrice, iexluldTier);
+        return Objects.hash(iexMessageType, iexSecurityDirectoryFlag, timestamp, symbol, roundLotSize, adjustedPOCPrice, iexluldTier);
     }
 
     @Override
@@ -113,5 +107,4 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
                 ", iexluldTier=" + iexluldTier +
                 '}';
     }
-
 }

@@ -9,9 +9,6 @@ import org.pcap4j.packet.Packet;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.deep.IEXDEEPMessageBlock;
 
-/**
- * @author Wojciech Zankowski
- */
 public class DEEPSample {
 
     public static void main(String[] args) throws PcapNativeException, InterruptedException, NotOpenException {

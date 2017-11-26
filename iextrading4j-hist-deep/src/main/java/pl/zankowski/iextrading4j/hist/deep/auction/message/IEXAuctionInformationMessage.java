@@ -8,10 +8,8 @@ import pl.zankowski.iextrading4j.hist.deep.auction.field.IEXAuctionType;
 import pl.zankowski.iextrading4j.hist.deep.auction.field.IEXSide;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXAuctionInformationMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -25,16 +23,27 @@ public class IEXAuctionInformationMessage extends IEXMessage {
     private final IEXSide iexSide;
     private final byte extensionNumber;
     private final int eventTime;
-    private final IEXPrice autcionBookClearingPrice;
+    private final IEXPrice auctionBookClearingPrice;
     private final IEXPrice collarReferencePrice;
     private final IEXPrice lowerAuctionCollar;
     private final IEXPrice upperAuctionCollar;
 
-    public IEXAuctionInformationMessage(IEXMessageType iexMessageType, IEXAuctionType iexAuctionType, long timestamp,
-                                        String symbol, int pairedShares, IEXPrice referencePrice, IEXPrice indicativeClearingPrice,
-                                        int imbalanceShares, IEXSide iexSide, byte extensionNumber, int eventTime,
-                                        IEXPrice autcionBookClearingPrice, IEXPrice collarReferencePrice, IEXPrice lowerAuctionCollar,
-                                        IEXPrice upperAuctionCollar) {
+    public IEXAuctionInformationMessage(
+            final IEXMessageType iexMessageType,
+            final IEXAuctionType iexAuctionType,
+            final long timestamp,
+            final String symbol,
+            final int pairedShares,
+            final IEXPrice referencePrice,
+            final IEXPrice indicativeClearingPrice,
+            final int imbalanceShares,
+            final IEXSide iexSide,
+            final byte extensionNumber,
+            final int eventTime,
+            final IEXPrice auctionBookClearingPrice,
+            final IEXPrice collarReferencePrice,
+            final IEXPrice lowerAuctionCollar,
+            final IEXPrice upperAuctionCollar) {
         this.iexMessageType = iexMessageType;
         this.iexAuctionType = iexAuctionType;
         this.timestamp = timestamp;
@@ -46,10 +55,30 @@ public class IEXAuctionInformationMessage extends IEXMessage {
         this.iexSide = iexSide;
         this.extensionNumber = extensionNumber;
         this.eventTime = eventTime;
-        this.autcionBookClearingPrice = autcionBookClearingPrice;
+        this.auctionBookClearingPrice = auctionBookClearingPrice;
         this.collarReferencePrice = collarReferencePrice;
         this.lowerAuctionCollar = lowerAuctionCollar;
         this.upperAuctionCollar = upperAuctionCollar;
+    }
+
+    public static IEXMessage createIEXMessage(final IEXMessageType iexMessageType, final byte[] bytes) {
+        final IEXAuctionType iexAuctionType = IEXAuctionType.getAuctionType(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final int pairedShares = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
+        final IEXPrice referencePrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
+        final IEXPrice indicativeClearingPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 30, 38));
+        final int imbalanceShares = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 38, 42));
+        final IEXSide imbalanceSide = IEXSide.getSide(bytes[42]);
+        final byte extensionNumber = bytes[43];
+        final int scheduledAuctionTime = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 44, 48));
+        final IEXPrice auctionBookClearingPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 48, 56));
+        final IEXPrice collarReferencePrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 56, 64));
+        final IEXPrice lowerAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 64, 72));
+        final IEXPrice upperAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 72, 80));
+        return new IEXAuctionInformationMessage(iexMessageType, iexAuctionType, timestamp, symbol, pairedShares, referencePrice, indicativeClearingPrice,
+                imbalanceShares, imbalanceSide, extensionNumber, scheduledAuctionTime, auctionBookClearingPrice, collarReferencePrice,
+                lowerAuctionCollar, upperAuctionCollar);
     }
 
     public IEXMessageType getIexMessageType() {
@@ -96,8 +125,8 @@ public class IEXAuctionInformationMessage extends IEXMessage {
         return eventTime;
     }
 
-    public IEXPrice getAutcionBookClearingPrice() {
-        return autcionBookClearingPrice;
+    public IEXPrice getAuctionBookClearingPrice() {
+        return auctionBookClearingPrice;
     }
 
     public IEXPrice getCollarReferencePrice() {
@@ -115,70 +144,31 @@ public class IEXAuctionInformationMessage extends IEXMessage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXAuctionInformationMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXAuctionInformationMessage that = (IEXAuctionInformationMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (pairedShares != that.pairedShares) return false;
-        if (imbalanceShares != that.imbalanceShares) return false;
-        if (extensionNumber != that.extensionNumber) return false;
-        if (eventTime != that.eventTime) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexAuctionType != that.iexAuctionType) return false;
-        if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
-        if (referencePrice != null ? !referencePrice.equals(that.referencePrice) : that.referencePrice != null)
-            return false;
-        if (indicativeClearingPrice != null ? !indicativeClearingPrice.equals(that.indicativeClearingPrice) : that.indicativeClearingPrice != null)
-            return false;
-        if (iexSide != that.iexSide) return false;
-        if (autcionBookClearingPrice != null ? !autcionBookClearingPrice.equals(that.autcionBookClearingPrice) : that.autcionBookClearingPrice != null)
-            return false;
-        if (collarReferencePrice != null ? !collarReferencePrice.equals(that.collarReferencePrice) : that.collarReferencePrice != null)
-            return false;
-        if (lowerAuctionCollar != null ? !lowerAuctionCollar.equals(that.lowerAuctionCollar) : that.lowerAuctionCollar != null)
-            return false;
-        return upperAuctionCollar != null ? upperAuctionCollar.equals(that.upperAuctionCollar) : that.upperAuctionCollar == null;
+        return timestamp == that.timestamp &&
+                pairedShares == that.pairedShares &&
+                imbalanceShares == that.imbalanceShares &&
+                extensionNumber == that.extensionNumber &&
+                eventTime == that.eventTime &&
+                iexMessageType == that.iexMessageType &&
+                iexAuctionType == that.iexAuctionType &&
+                Objects.equals(symbol, that.symbol) &&
+                Objects.equals(referencePrice, that.referencePrice) &&
+                Objects.equals(indicativeClearingPrice, that.indicativeClearingPrice) &&
+                iexSide == that.iexSide &&
+                Objects.equals(auctionBookClearingPrice, that.auctionBookClearingPrice) &&
+                Objects.equals(collarReferencePrice, that.collarReferencePrice) &&
+                Objects.equals(lowerAuctionCollar, that.lowerAuctionCollar) &&
+                Objects.equals(upperAuctionCollar, that.upperAuctionCollar);
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexAuctionType != null ? iexAuctionType.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        result = 31 * result + pairedShares;
-        result = 31 * result + (referencePrice != null ? referencePrice.hashCode() : 0);
-        result = 31 * result + (indicativeClearingPrice != null ? indicativeClearingPrice.hashCode() : 0);
-        result = 31 * result + imbalanceShares;
-        result = 31 * result + (iexSide != null ? iexSide.hashCode() : 0);
-        result = 31 * result + (int) extensionNumber;
-        result = 31 * result + eventTime;
-        result = 31 * result + (autcionBookClearingPrice != null ? autcionBookClearingPrice.hashCode() : 0);
-        result = 31 * result + (collarReferencePrice != null ? collarReferencePrice.hashCode() : 0);
-        result = 31 * result + (lowerAuctionCollar != null ? lowerAuctionCollar.hashCode() : 0);
-        result = 31 * result + (upperAuctionCollar != null ? upperAuctionCollar.hashCode() : 0);
-        return result;
-    }
-
-    public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
-        IEXAuctionType iexAuctionType = IEXAuctionType.getAuctionType(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-        int pairedShares = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
-        IEXPrice referencePrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
-        IEXPrice indicativeClearingPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 30, 38));
-        int imbalanceShares = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 38, 42));
-        IEXSide imbalanceSide = IEXSide.getSide(bytes[42]);
-        byte extensionNumber = bytes[43];
-        int scheduledAuctionTime = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 44, 48));
-        IEXPrice auctionBookClearingPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 48, 56));
-        IEXPrice collarReferencePrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 56, 64));
-        IEXPrice lowerAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 64, 72));
-        IEXPrice upperAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 72, 80));
-        return new IEXAuctionInformationMessage(iexMessageType, iexAuctionType, timestamp, symbol, pairedShares, referencePrice, indicativeClearingPrice,
-                imbalanceShares, imbalanceSide, extensionNumber, scheduledAuctionTime, auctionBookClearingPrice, collarReferencePrice,
-                lowerAuctionCollar, upperAuctionCollar);
+        return Objects.hash(iexMessageType, iexAuctionType, timestamp, symbol, pairedShares,
+                referencePrice, indicativeClearingPrice, imbalanceShares, iexSide, extensionNumber,
+                eventTime, auctionBookClearingPrice, collarReferencePrice, lowerAuctionCollar,
+                upperAuctionCollar);
     }
 
     @Override
@@ -195,7 +185,7 @@ public class IEXAuctionInformationMessage extends IEXMessage {
                 ", iexSide=" + iexSide +
                 ", extensionNumber=" + extensionNumber +
                 ", eventTime=" + eventTime +
-                ", autcionBookClearingPrice=" + autcionBookClearingPrice +
+                ", auctionBookClearingPrice=" + auctionBookClearingPrice +
                 ", collarReferencePrice=" + collarReferencePrice +
                 ", lowerAuctionCollar=" + lowerAuctionCollar +
                 ", upperAuctionCollar=" + upperAuctionCollar +

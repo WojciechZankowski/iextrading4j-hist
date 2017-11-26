@@ -7,10 +7,8 @@ import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXDetail;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXShortSalePriceTestStatus;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -19,7 +17,12 @@ public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
     private final String symbol;
     private final IEXDetail iexDetail;
 
-    public IEXShortSalePriceTestStatusMessage(IEXMessageType iexMessageType, IEXShortSalePriceTestStatus iexShortSalePriceTestStatus, long timestamp, String symbol, IEXDetail iexDetail) {
+    public IEXShortSalePriceTestStatusMessage(
+            final IEXMessageType iexMessageType,
+            final IEXShortSalePriceTestStatus iexShortSalePriceTestStatus,
+            final long timestamp,
+            final String symbol,
+            final IEXDetail iexDetail) {
         this.iexMessageType = iexMessageType;
         this.iexShortSalePriceTestStatus = iexShortSalePriceTestStatus;
         this.timestamp = timestamp;
@@ -27,11 +30,11 @@ public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
         this.iexDetail = iexDetail;
     }
 
-    public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
-        IEXShortSalePriceTestStatus iexShortSalePriceTestStatus = IEXShortSalePriceTestStatus.getShortSalePriceTestStatus(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-        IEXDetail iexDetail = IEXDetail.getDetail(bytes[18]);
+    public static IEXMessage createIEXMessage(final IEXMessageType iexMessageType, final byte[] bytes) {
+        final IEXShortSalePriceTestStatus iexShortSalePriceTestStatus = IEXShortSalePriceTestStatus.getShortSalePriceTestStatus(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final IEXDetail iexDetail = IEXDetail.getDetail(bytes[18]);
         return new IEXShortSalePriceTestStatusMessage(iexMessageType, iexShortSalePriceTestStatus, timestamp, symbol, iexDetail);
     }
 
@@ -58,25 +61,18 @@ public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXShortSalePriceTestStatusMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXShortSalePriceTestStatusMessage that = (IEXShortSalePriceTestStatusMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexShortSalePriceTestStatus != that.iexShortSalePriceTestStatus) return false;
-        if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
-        return iexDetail == that.iexDetail;
+        return timestamp == that.timestamp &&
+                iexMessageType == that.iexMessageType &&
+                iexShortSalePriceTestStatus == that.iexShortSalePriceTestStatus &&
+                Objects.equals(symbol, that.symbol) &&
+                iexDetail == that.iexDetail;
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexShortSalePriceTestStatus != null ? iexShortSalePriceTestStatus.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        result = 31 * result + (iexDetail != null ? iexDetail.hashCode() : 0);
-        return result;
+        return Objects.hash(iexMessageType, iexShortSalePriceTestStatus, timestamp, symbol, iexDetail);
     }
 
     @Override

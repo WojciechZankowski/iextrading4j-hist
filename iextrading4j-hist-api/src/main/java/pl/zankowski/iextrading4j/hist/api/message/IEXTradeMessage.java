@@ -6,10 +6,8 @@ import pl.zankowski.iextrading4j.hist.api.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXTradeMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -20,8 +18,14 @@ public class IEXTradeMessage extends IEXMessage {
     private final IEXPrice price;
     private final long tradeID;
 
-    public IEXTradeMessage(IEXMessageType iexMessageType, IEXSaleConditionFlag iexSaleConditionFlag, long timestamp,
-                           String symbol, int size, IEXPrice price, long tradeID) {
+    public IEXTradeMessage(
+            final IEXMessageType iexMessageType,
+            final IEXSaleConditionFlag iexSaleConditionFlag,
+            final long timestamp,
+            final String symbol,
+            final int size,
+            final IEXPrice price,
+            final long tradeID) {
         this.iexMessageType = iexMessageType;
         this.iexSaleConditionFlag = iexSaleConditionFlag;
         this.timestamp = timestamp;
@@ -31,13 +35,13 @@ public class IEXTradeMessage extends IEXMessage {
         this.tradeID = tradeID;
     }
 
-    public static IEXTradeMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
-        IEXSaleConditionFlag iexSaleConditionFlag = IEXSaleConditionFlag.getSaleConditionFlag(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-        int size = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
-        IEXPrice price = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
-        long tradeID = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 30, 38));
+    public static IEXTradeMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+        final IEXSaleConditionFlag iexSaleConditionFlag = IEXSaleConditionFlag.getSaleConditionFlag(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final int size = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
+        final IEXPrice price = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
+        final long tradeID = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 30, 38));
 
         return new IEXTradeMessage(messageType, iexSaleConditionFlag, timestamp, symbol, size, price, tradeID);
     }
@@ -73,34 +77,25 @@ public class IEXTradeMessage extends IEXMessage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXTradeMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXTradeMessage that = (IEXTradeMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (size != that.size) return false;
-        if (tradeID != that.tradeID) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexSaleConditionFlag != that.iexSaleConditionFlag) return false;
-        if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
-        return price != null ? price.equals(that.price) : that.price == null;
+        return timestamp == that.timestamp &&
+                size == that.size &&
+                tradeID == that.tradeID &&
+                iexMessageType == that.iexMessageType &&
+                iexSaleConditionFlag == that.iexSaleConditionFlag &&
+                Objects.equals(symbol, that.symbol) &&
+                Objects.equals(price, that.price);
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexSaleConditionFlag != null ? iexSaleConditionFlag.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        result = 31 * result + size;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (int) (tradeID ^ (tradeID >>> 32));
-        return result;
+        return Objects.hash(iexMessageType, iexSaleConditionFlag, timestamp, symbol, size, price, tradeID);
     }
 
     @Override
     public String toString() {
-        return "pl.zankowski.iextrading4j.hist.api.message.IEXTradeMessage{" +
+        return "IEXTradeMessage{" +
                 "iexMessageType=" + iexMessageType +
                 ", iexSaleConditionFlag=" + iexSaleConditionFlag +
                 ", timestamp=" + timestamp +
@@ -110,5 +105,4 @@ public class IEXTradeMessage extends IEXMessage {
                 ", tradeID=" + tradeID +
                 '}';
     }
-
 }

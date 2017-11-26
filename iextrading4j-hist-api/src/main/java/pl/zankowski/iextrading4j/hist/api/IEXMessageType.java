@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXMessageType {
 
     QUOTE_UPDATE((byte) 0x51),
@@ -25,7 +22,7 @@ public enum IEXMessageType {
         this.code = code;
     }
 
-    public static IEXMessageType getMessageType(byte code) {
+    public static IEXMessageType getMessageType(final byte code) {
         for (IEXMessageType iexMessageType : values()) {
             if (iexMessageType.getCode() == code) {
                 return iexMessageType;

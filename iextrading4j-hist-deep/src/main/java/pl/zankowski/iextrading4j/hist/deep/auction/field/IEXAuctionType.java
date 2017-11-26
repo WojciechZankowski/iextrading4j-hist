@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.auction.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXAuctionType {
 
     OPENING_AUCTION((byte) 0x4f),
@@ -18,7 +15,7 @@ public enum IEXAuctionType {
         this.code = code;
     }
 
-    public static IEXAuctionType getAuctionType(byte code) {
+    public static IEXAuctionType getAuctionType(final byte code) {
         for (IEXAuctionType iexAuctionType : values()) {
             if (iexAuctionType.getCode() == code) {
                 return iexAuctionType;

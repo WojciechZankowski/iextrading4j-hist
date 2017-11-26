@@ -6,10 +6,8 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXOperationalHaltStatus;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXOperationalHaltStatusMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -17,7 +15,11 @@ public class IEXOperationalHaltStatusMessage extends IEXMessage {
     private final long timestamp;
     private final String symbol;
 
-    public IEXOperationalHaltStatusMessage(IEXMessageType iexMessageType, IEXOperationalHaltStatus iexOperationalHaltStatus, long timestamp, String symbol) {
+    public IEXOperationalHaltStatusMessage(
+            final IEXMessageType iexMessageType,
+            final IEXOperationalHaltStatus iexOperationalHaltStatus,
+            final long timestamp,
+            final String symbol) {
         this.iexMessageType = iexMessageType;
         this.iexOperationalHaltStatus = iexOperationalHaltStatus;
         this.timestamp = timestamp;
@@ -25,9 +27,9 @@ public class IEXOperationalHaltStatusMessage extends IEXMessage {
     }
 
     public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
-        IEXOperationalHaltStatus iexOperationalHaltStatus = IEXOperationalHaltStatus.getOperationalHaltStatus(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final IEXOperationalHaltStatus iexOperationalHaltStatus = IEXOperationalHaltStatus.getOperationalHaltStatus(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         return new IEXOperationalHaltStatusMessage(iexMessageType, iexOperationalHaltStatus, timestamp, symbol);
     }
 
@@ -50,23 +52,17 @@ public class IEXOperationalHaltStatusMessage extends IEXMessage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXOperationalHaltStatusMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXOperationalHaltStatusMessage that = (IEXOperationalHaltStatusMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexOperationalHaltStatus != that.iexOperationalHaltStatus) return false;
-        return symbol != null ? symbol.equals(that.symbol) : that.symbol == null;
+        return timestamp == that.timestamp &&
+                iexMessageType == that.iexMessageType &&
+                iexOperationalHaltStatus == that.iexOperationalHaltStatus &&
+                Objects.equals(symbol, that.symbol);
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexOperationalHaltStatus != null ? iexOperationalHaltStatus.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        return result;
+        return Objects.hash(iexMessageType, iexOperationalHaltStatus, timestamp, symbol);
     }
 
     @Override

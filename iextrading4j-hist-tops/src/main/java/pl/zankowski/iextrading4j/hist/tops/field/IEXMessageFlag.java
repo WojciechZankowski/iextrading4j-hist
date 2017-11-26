@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.tops.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXMessageFlag {
 
     ACTIVE_IN_SESSION((byte) 0x00),
@@ -17,7 +14,7 @@ public enum IEXMessageFlag {
         this.flag = flag;
     }
 
-    public static IEXMessageFlag getMessageFromFlag(byte flag) {
+    public static IEXMessageFlag getMessageFromFlag(final byte flag) {
         for (IEXMessageFlag iexMessageFlag : values()) {
             if (iexMessageFlag.getFlag() == flag) {
                 return iexMessageFlag;

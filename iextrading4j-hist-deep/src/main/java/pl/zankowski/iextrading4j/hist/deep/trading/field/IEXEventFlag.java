@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.trading.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXEventFlag {
 
     ORDER_BOOK_IS_PROCESSING_EVENT((byte) 0x0),
@@ -19,7 +16,7 @@ public enum IEXEventFlag {
         return code;
     }
 
-    public static IEXEventFlag getEventFlag(byte code) {
+    public static IEXEventFlag getEventFlag(final byte code) {
         for (IEXEventFlag iexEventFlag : values()) {
             if (iexEventFlag.getCode() == code) {
                 return iexEventFlag;

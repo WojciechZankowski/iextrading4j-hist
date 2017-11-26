@@ -19,20 +19,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXDEEPMessageBlock extends IEXSegment {
 
-    public IEXDEEPMessageBlock(IEXMessageHeader messageHeader, List<IEXMessage> messages) {
+    public IEXDEEPMessageBlock(
+            final IEXMessageHeader messageHeader,
+            final List<IEXMessage> messages) {
         super(messageHeader, messages);
     }
 
-    public static IEXSegment createIEXSegment(byte[] packet) {
-        List<IEXMessage> iexMessages = new ArrayList<>();
+    public static IEXSegment createIEXSegment(final byte[] packet) {
+        final List<IEXMessage> iexMessages = new ArrayList<>();
         int offset = 40;
 
-        IEXMessageHeader iexMessageHeader = IEXMessageHeader.createIEXMessageHeader(Arrays.copyOfRange(packet, 0, offset));
+        final IEXMessageHeader iexMessageHeader = IEXMessageHeader.createIEXMessageHeader(Arrays.copyOfRange(packet, 0, offset));
 
         for (int i = 0; i < iexMessageHeader.getMessageCount(); i++) {
             short length = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(packet, offset, offset = offset + 2));
@@ -43,8 +42,8 @@ public class IEXDEEPMessageBlock extends IEXSegment {
     }
 
 
-    private static IEXMessage resolveMessage(byte[] bytes) {
-        IEXMessageType messageType = IEXMessageType.getMessageType(bytes[0]);
+    private static IEXMessage resolveMessage(final byte[] bytes) {
+        final IEXMessageType messageType = IEXMessageType.getMessageType(bytes[0]);
 
         switch (messageType) {
             case TRADE_REPORT:

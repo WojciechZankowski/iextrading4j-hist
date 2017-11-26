@@ -7,120 +7,115 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.tops.field.IEXMessageFlag;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXQuoteUpdateMessage extends IEXMessage {
 
-	private final IEXMessageType messageType;
-	private final IEXMessageFlag messageFlag;
-	private final long timestamp;
-	private final String symbol;
-	private final int bidSize;
-	private final IEXPrice bidPrice;
-	private final IEXPrice askPrice;
-	private final int askSize;
+    private final IEXMessageType messageType;
+    private final IEXMessageFlag messageFlag;
+    private final long timestamp;
+    private final String symbol;
+    private final int bidSize;
+    private final IEXPrice bidPrice;
+    private final IEXPrice askPrice;
+    private final int askSize;
 
-	private IEXQuoteUpdateMessage(IEXMessageType messageType, IEXMessageFlag messageFlag, long timestamp,
-								  String symbol, int bidSize, IEXPrice bidPrice, IEXPrice askPrice, int askSize) {
-		this.messageType = messageType;
-		this.messageFlag = messageFlag;
-		this.timestamp = timestamp;
-		this.symbol = symbol;
-		this.bidSize = bidSize;
-		this.bidPrice = bidPrice;
-		this.askPrice = askPrice;
-		this.askSize = askSize;
-	}
+    private IEXQuoteUpdateMessage(
+            final IEXMessageType messageType,
+            final IEXMessageFlag messageFlag,
+            final long timestamp,
+            final String symbol,
+            final int bidSize,
+            final IEXPrice bidPrice,
+            final IEXPrice askPrice,
+            final int askSize) {
+        this.messageType = messageType;
+        this.messageFlag = messageFlag;
+        this.timestamp = timestamp;
+        this.symbol = symbol;
+        this.bidSize = bidSize;
+        this.bidPrice = bidPrice;
+        this.askPrice = askPrice;
+        this.askSize = askSize;
+    }
 
-	public IEXMessageType getMessageType() {
-		return messageType;
-	}
+    public static IEXQuoteUpdateMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+        final IEXMessageFlag messageFlag = IEXMessageFlag.getMessageFromFlag(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final int bidSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
+        final IEXPrice bidPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
+        final IEXPrice askPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 30, 38));
+        final int askSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 38, 42));
 
-	public IEXMessageFlag getMessageFlag() {
-		return messageFlag;
-	}
+        return new IEXQuoteUpdateMessage(messageType, messageFlag, timestamp, symbol, bidSize, bidPrice,
+                askPrice, askSize);
+    }
 
-	public long getTimestamp() {
-		return timestamp;
-	}
+    public IEXMessageType getMessageType() {
+        return messageType;
+    }
 
-	public String getSymbol() {
-		return symbol;
-	}
+    public IEXMessageFlag getMessageFlag() {
+        return messageFlag;
+    }
 
-	public int getBidSize() {
-		return bidSize;
-	}
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-	public IEXPrice getBidPrice() {
-		return bidPrice;
-	}
+    public String getSymbol() {
+        return symbol;
+    }
 
-	public IEXPrice getAskPrice() {
-		return askPrice;
-	}
+    public int getBidSize() {
+        return bidSize;
+    }
 
-	public int getAskSize() {
-		return askSize;
-	}
+    public IEXPrice getBidPrice() {
+        return bidPrice;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof IEXQuoteUpdateMessage)) return false;
+    public IEXPrice getAskPrice() {
+        return askPrice;
+    }
 
-		IEXQuoteUpdateMessage that = (IEXQuoteUpdateMessage) o;
+    public int getAskSize() {
+        return askSize;
+    }
 
-		if (timestamp != that.timestamp) return false;
-		if (bidSize != that.bidSize) return false;
-		if (askSize != that.askSize) return false;
-		if (messageType != that.messageType) return false;
-		if (messageFlag != that.messageFlag) return false;
-		if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
-		if (bidPrice != null ? !bidPrice.equals(that.bidPrice) : that.bidPrice != null) return false;
-		return askPrice != null ? askPrice.equals(that.askPrice) : that.askPrice == null;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IEXQuoteUpdateMessage that = (IEXQuoteUpdateMessage) o;
+        return timestamp == that.timestamp &&
+                bidSize == that.bidSize &&
+                askSize == that.askSize &&
+                messageType == that.messageType &&
+                messageFlag == that.messageFlag &&
+                Objects.equals(symbol, that.symbol) &&
+                Objects.equals(bidPrice, that.bidPrice) &&
+                Objects.equals(askPrice, that.askPrice);
+    }
 
-	@Override
-	public int hashCode() {
-		int result = messageType != null ? messageType.hashCode() : 0;
-		result = 31 * result + (messageFlag != null ? messageFlag.hashCode() : 0);
-		result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-		result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-		result = 31 * result + bidSize;
-		result = 31 * result + (bidPrice != null ? bidPrice.hashCode() : 0);
-		result = 31 * result + (askPrice != null ? askPrice.hashCode() : 0);
-		result = 31 * result + askSize;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(messageType, messageFlag, timestamp, symbol, bidSize,
+                bidPrice, askPrice, askSize);
+    }
 
-	public static IEXQuoteUpdateMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
-		IEXMessageFlag messageFlag = IEXMessageFlag.getMessageFromFlag(bytes[1]);
-		long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-		String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-		int bidSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
-		IEXPrice bidPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
-		IEXPrice askPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 30, 38));
-		int askSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 38, 42));
-
-		return new IEXQuoteUpdateMessage(messageType, messageFlag, timestamp, symbol, bidSize, bidPrice,
-				askPrice, askSize);
-	}
-
-	@Override
-	public String toString() {
-		return "IEXQuoteUpdateMessage{" +
-				"messageType=" + messageType +
-				", messageFlag=" + messageFlag +
-				", timestamp=" + timestamp +
-				", symbol='" + symbol + '\'' +
-				", bidSize=" + bidSize +
-				", bidPrice=" + bidPrice +
-				", askPrice=" + askPrice +
-				", askSize=" + askSize +
-				'}';
-	}
-
+    @Override
+    public String toString() {
+        return "IEXQuoteUpdateMessage{" +
+                "messageType=" + messageType +
+                ", messageFlag=" + messageFlag +
+                ", timestamp=" + timestamp +
+                ", symbol='" + symbol + '\'' +
+                ", bidSize=" + bidSize +
+                ", bidPrice=" + bidPrice +
+                ", askPrice=" + askPrice +
+                ", askSize=" + askSize +
+                '}';
+    }
 }

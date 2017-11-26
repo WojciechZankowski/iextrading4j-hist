@@ -3,10 +3,8 @@ package pl.zankowski.iextrading4j.hist.api.message;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXMessageHeader {
 
     private final byte version;
@@ -19,7 +17,16 @@ public class IEXMessageHeader {
     private final long firstMessageSequenceNumber;
     private final long sendTime;
 
-    private IEXMessageHeader(byte version, short messageProtocolID, int channelID, int sessionID, short payloadLength, short messageCount, long streamOffset, long firstMessageSequenceNumber, long sendTime) {
+    private IEXMessageHeader(
+            final byte version,
+            final short messageProtocolID,
+            final int channelID,
+            final int sessionID,
+            final short payloadLength,
+            final short messageCount,
+            final long streamOffset,
+            final long firstMessageSequenceNumber,
+            final long sendTime) {
         this.version = version;
         this.messageProtocolID = messageProtocolID;
         this.channelID = channelID;
@@ -31,20 +38,20 @@ public class IEXMessageHeader {
         this.sendTime = sendTime;
     }
 
-    public static IEXMessageHeader createIEXMessageHeader(byte[] bytes) {
+    public static IEXMessageHeader createIEXMessageHeader(final byte[] bytes) {
         if (bytes.length != 40) {
             throw new IllegalArgumentException("IEX TOPS Message Header has to has 40 bytes.");
         }
 
-        byte version = bytes[0];
-        short msgProtocolID = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 2, 4));
-        int channelID = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 4, 8));
-        int sessionID = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 8, 12));
-        short payloadLength = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 12, 14));
-        short messageCount = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 14, 16));
-        long streamOffset = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 16, 24));
-        long firstMessageSequenceNumber = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 24, 32));
-        long sendTime = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 32, 40));
+        final byte version = bytes[0];
+        final short msgProtocolID = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 2, 4));
+        final int channelID = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 4, 8));
+        final int sessionID = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 8, 12));
+        final short payloadLength = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 12, 14));
+        final short messageCount = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 14, 16));
+        final long streamOffset = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 16, 24));
+        final long firstMessageSequenceNumber = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 24, 32));
+        final long sendTime = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 32, 40));
 
         return new IEXMessageHeader(version, msgProtocolID, channelID, sessionID, payloadLength, messageCount,
                 streamOffset, firstMessageSequenceNumber, sendTime);
@@ -89,33 +96,23 @@ public class IEXMessageHeader {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXMessageHeader)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXMessageHeader that = (IEXMessageHeader) o;
-
-        if (version != that.version) return false;
-        if (messageProtocolID != that.messageProtocolID) return false;
-        if (channelID != that.channelID) return false;
-        if (sessionID != that.sessionID) return false;
-        if (payloadLength != that.payloadLength) return false;
-        if (messageCount != that.messageCount) return false;
-        if (streamOffset != that.streamOffset) return false;
-        if (firstMessageSequenceNumber != that.firstMessageSequenceNumber) return false;
-        return sendTime == that.sendTime;
+        return version == that.version &&
+                messageProtocolID == that.messageProtocolID &&
+                channelID == that.channelID &&
+                sessionID == that.sessionID &&
+                payloadLength == that.payloadLength &&
+                messageCount == that.messageCount &&
+                streamOffset == that.streamOffset &&
+                firstMessageSequenceNumber == that.firstMessageSequenceNumber &&
+                sendTime == that.sendTime;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) version;
-        result = 31 * result + (int) messageProtocolID;
-        result = 31 * result + channelID;
-        result = 31 * result + sessionID;
-        result = 31 * result + (int) payloadLength;
-        result = 31 * result + (int) messageCount;
-        result = 31 * result + (int) (streamOffset ^ (streamOffset >>> 32));
-        result = 31 * result + (int) (firstMessageSequenceNumber ^ (firstMessageSequenceNumber >>> 32));
-        result = 31 * result + (int) (sendTime ^ (sendTime >>> 32));
-        return result;
+        return Objects.hash(version, messageProtocolID, channelID, sessionID, payloadLength,
+                messageCount, streamOffset, firstMessageSequenceNumber, sendTime);
     }
 
     @Override
@@ -132,5 +129,4 @@ public class IEXMessageHeader {
                 ", sendTime=" + sendTime +
                 '}';
     }
-
 }

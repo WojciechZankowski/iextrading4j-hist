@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXTradingStatus {
 
     TRADING_HALTED((byte) 0x48),
@@ -17,7 +14,7 @@ public enum IEXTradingStatus {
         this.code = code;
     }
 
-    public static IEXTradingStatus getTradingStatus(byte code) {
+    public static IEXTradingStatus getTradingStatus(final byte code) {
         for (IEXTradingStatus iexTradingStatus : values()) {
             if (iexTradingStatus.getCode() == code) {
                 return iexTradingStatus;

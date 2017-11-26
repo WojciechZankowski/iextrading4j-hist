@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXDetail {
 
     NO_PRICE_TEST((byte) 0x20),
@@ -18,7 +15,7 @@ public enum IEXDetail {
         this.code = code;
     }
 
-    public static IEXDetail getDetail(byte code) {
+    public static IEXDetail getDetail(final byte code) {
         for (IEXDetail iexDetail : values()) {
             if (iexDetail.getCode() == code) {
                 return iexDetail;

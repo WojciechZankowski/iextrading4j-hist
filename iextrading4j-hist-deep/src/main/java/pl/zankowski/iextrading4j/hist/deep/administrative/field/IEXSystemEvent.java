@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXSystemEvent {
 
     MESSAGES_START((byte) 0x4f),
@@ -19,7 +16,7 @@ public enum IEXSystemEvent {
         this.code = code;
     }
 
-    public static IEXSystemEvent getSystemEvent(byte code) {
+    public static IEXSystemEvent getSystemEvent(final byte code) {
         for (IEXSystemEvent iexSystemEvent : values()) {
             if (iexSystemEvent.getCode() == code) {
                 return iexSystemEvent;

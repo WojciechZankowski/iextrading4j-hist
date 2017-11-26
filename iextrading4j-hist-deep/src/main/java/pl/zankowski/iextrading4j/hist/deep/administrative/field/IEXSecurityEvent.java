@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXSecurityEvent {
 
     OPENING_PROCESS_COMPLETE((byte) 0x4f),
@@ -15,7 +12,7 @@ public enum IEXSecurityEvent {
         this.code = code;
     }
 
-    public static IEXSecurityEvent getSecurityEvent(byte code) {
+    public static IEXSecurityEvent getSecurityEvent(final byte code) {
         for (IEXSecurityEvent iexSecurityEvent : values()) {
             if (iexSecurityEvent.getCode() == code) {
                 return iexSecurityEvent;

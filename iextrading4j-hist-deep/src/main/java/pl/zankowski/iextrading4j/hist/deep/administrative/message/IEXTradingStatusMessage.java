@@ -6,10 +6,8 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXTradingStatus;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXTradingStatusMessage extends IEXMessage {
 
     private final IEXMessageType iexMessageType;
@@ -18,12 +16,25 @@ public class IEXTradingStatusMessage extends IEXMessage {
     private final String symbol;
     private final String reason;
 
-    public IEXTradingStatusMessage(IEXMessageType iexMessageType, IEXTradingStatus iexTradingStatus, long timestamp, String symbol, String reason) {
+    public IEXTradingStatusMessage(
+            final IEXMessageType iexMessageType,
+            final IEXTradingStatus iexTradingStatus,
+            final long timestamp,
+            final String symbol,
+            final String reason) {
         this.iexMessageType = iexMessageType;
         this.iexTradingStatus = iexTradingStatus;
         this.timestamp = timestamp;
         this.symbol = symbol;
         this.reason = reason;
+    }
+
+    public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
+        final IEXTradingStatus iexTradingStatus = IEXTradingStatus.getTradingStatus(bytes[1]);
+        final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+        final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+        final String reason = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 18, 22));
+        return new IEXTradingStatusMessage(iexMessageType, iexTradingStatus, timestamp, symbol, reason);
     }
 
     public IEXMessageType getIexMessageType() {
@@ -46,36 +57,22 @@ public class IEXTradingStatusMessage extends IEXMessage {
         return reason;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof IEXTradingStatusMessage)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         IEXTradingStatusMessage that = (IEXTradingStatusMessage) o;
-
-        if (timestamp != that.timestamp) return false;
-        if (iexMessageType != that.iexMessageType) return false;
-        if (iexTradingStatus != that.iexTradingStatus) return false;
-        if (symbol != null ? !symbol.equals(that.symbol) : that.symbol != null) return false;
-        return reason != null ? reason.equals(that.reason) : that.reason == null;
+        return timestamp == that.timestamp &&
+                iexMessageType == that.iexMessageType &&
+                iexTradingStatus == that.iexTradingStatus &&
+                Objects.equals(symbol, that.symbol) &&
+                Objects.equals(reason, that.reason);
     }
 
     @Override
     public int hashCode() {
-        int result = iexMessageType != null ? iexMessageType.hashCode() : 0;
-        result = 31 * result + (iexTradingStatus != null ? iexTradingStatus.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
-        result = 31 * result + (reason != null ? reason.hashCode() : 0);
-        return result;
-    }
-
-    public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
-        IEXTradingStatus iexTradingStatus = IEXTradingStatus.getTradingStatus(bytes[1]);
-        long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
-        String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
-        String reason = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 18, 22));
-        return new IEXTradingStatusMessage(iexMessageType, iexTradingStatus, timestamp, symbol, reason);
+        return Objects.hash(iexMessageType, iexTradingStatus, timestamp, symbol, reason);
     }
 
     @Override

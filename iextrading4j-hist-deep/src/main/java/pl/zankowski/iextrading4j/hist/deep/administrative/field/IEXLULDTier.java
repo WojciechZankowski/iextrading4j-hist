@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXLULDTier {
 
     NOT_APPLICABLE((byte) 0x0),
@@ -16,7 +13,7 @@ public enum IEXLULDTier {
         this.code = code;
     }
 
-    public static IEXLULDTier getLULDTier(byte code) {
+    public static IEXLULDTier getLULDTier(final byte code) {
         for (IEXLULDTier iexluldTier : values()) {
             if (iexluldTier.getCode() == code) {
                 return iexluldTier;

@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXSaleConditionFlag {
 
     NON_INTERMARKET_SWEEP_ORDER((byte) 0x00),
@@ -21,7 +18,7 @@ public enum IEXSaleConditionFlag {
         this.code = code;
     }
 
-    public static IEXSaleConditionFlag getSaleConditionFlag(byte code) {
+    public static IEXSaleConditionFlag getSaleConditionFlag(final byte code) {
         for (IEXSaleConditionFlag iexSaleConditionFlag : values()) {
             if (iexSaleConditionFlag.getCode() == code) {
                 return iexSaleConditionFlag;

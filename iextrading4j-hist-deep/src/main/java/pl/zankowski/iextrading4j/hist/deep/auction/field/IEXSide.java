@@ -1,8 +1,5 @@
 package pl.zankowski.iextrading4j.hist.deep.auction.field;
 
-/**
- * @author Wojciech Zankowski
- */
 public enum IEXSide {
 
     BUY_IMBALANCE((byte) 0x42),
@@ -16,7 +13,7 @@ public enum IEXSide {
         this.code = code;
     }
 
-    public static IEXSide getSide(byte code) {
+    public static IEXSide getSide(final byte code) {
         for (IEXSide iexSide : values()) {
             if (iexSide.getCode() == code) {
                 return iexSide;

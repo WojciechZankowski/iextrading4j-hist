@@ -12,6 +12,9 @@
     <artifactId>iextrading4j-hist-api</artifactId>
 
     <dependencies>
+
+        <!-- Tests -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
