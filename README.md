@@ -19,6 +19,14 @@
 
 Java SE 8 is required to use IEXTrading4j HIST library.
 
+```
+<dependency>
+	<groupId>pl.zankowski</groupId>
+	<artifactId>iextrading4j-hist-all</artifactId>
+	<version>1.0.0</version>
+</dependency>
+```
+
 Library is up to:
 
 * TOPS version 1.56 - May 9, 2017
