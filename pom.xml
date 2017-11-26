@@ -39,6 +39,7 @@
         <module>iextrading4j-hist-tops</module>
         <module>iextrading4j-hist-samples</module>
         <module>iextrading4j-hist-deep</module>
+        <module>iextrading4j-hist-all</module>
     </modules>
 
     <properties>
