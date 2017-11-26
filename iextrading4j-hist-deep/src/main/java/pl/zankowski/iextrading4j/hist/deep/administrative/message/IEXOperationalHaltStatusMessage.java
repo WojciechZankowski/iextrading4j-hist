@@ -30,6 +30,7 @@ public class IEXOperationalHaltStatusMessage extends IEXMessage {
         final IEXOperationalHaltStatus iexOperationalHaltStatus = IEXOperationalHaltStatus.getOperationalHaltStatus(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
+
         return new IEXOperationalHaltStatusMessage(iexMessageType, iexOperationalHaltStatus, timestamp, symbol);
     }
 

@@ -76,6 +76,7 @@ public class IEXAuctionInformationMessage extends IEXMessage {
         final IEXPrice collarReferencePrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 56, 64));
         final IEXPrice lowerAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 64, 72));
         final IEXPrice upperAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 72, 80));
+
         return new IEXAuctionInformationMessage(iexMessageType, iexAuctionType, timestamp, symbol, pairedShares, referencePrice, indicativeClearingPrice,
                 imbalanceShares, imbalanceSide, extensionNumber, scheduledAuctionTime, auctionBookClearingPrice, collarReferencePrice,
                 lowerAuctionCollar, upperAuctionCollar);

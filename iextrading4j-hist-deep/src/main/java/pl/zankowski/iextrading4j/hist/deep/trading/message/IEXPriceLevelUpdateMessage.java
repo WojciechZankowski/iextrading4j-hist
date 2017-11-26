@@ -39,6 +39,7 @@ public class IEXPriceLevelUpdateMessage extends IEXMessage {
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final int size = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
         final IEXPrice iexPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
+
         return new IEXPriceLevelUpdateMessage(iexMessageType, iexEventFlag, timestamp, symbol, size, iexPrice);
     }
 

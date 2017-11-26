@@ -12,18 +12,18 @@ import pl.zankowski.iextrading4j.hist.deep.IEXDEEPMessageBlock;
 public class DEEPSample {
 
     public static void main(String[] args) throws PcapNativeException, InterruptedException, NotOpenException {
-        DEEPSample deepSample = new DEEPSample();
+        final DEEPSample deepSample = new DEEPSample();
         deepSample.readDEEPsample();
     }
 
     private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+        final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
 
         handle.loop(-1, new PacketListener() {
             @Override
-            public void gotPacket(Packet packet) {
-                byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
-                IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(data);
+            public void gotPacket(final Packet packet) {
+                final byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
+                final IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(data);
                 System.out.println(block);
             }
         });

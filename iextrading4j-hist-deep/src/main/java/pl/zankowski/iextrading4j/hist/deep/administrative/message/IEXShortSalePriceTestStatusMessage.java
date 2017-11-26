@@ -35,6 +35,7 @@ public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final IEXDetail iexDetail = IEXDetail.getDetail(bytes[18]);
+
         return new IEXShortSalePriceTestStatusMessage(iexMessageType, iexShortSalePriceTestStatus, timestamp, symbol, iexDetail);
     }
 

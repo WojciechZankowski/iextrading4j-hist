@@ -34,6 +34,7 @@ public class IEXTradingStatusMessage extends IEXMessage {
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final String reason = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 18, 22));
+
         return new IEXTradingStatusMessage(iexMessageType, iexTradingStatus, timestamp, symbol, reason);
     }
 

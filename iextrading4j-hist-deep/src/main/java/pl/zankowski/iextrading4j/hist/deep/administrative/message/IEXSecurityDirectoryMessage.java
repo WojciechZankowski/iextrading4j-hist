@@ -72,6 +72,7 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
         final int roundLotSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
         final IEXPrice adjustedPOCPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
         final IEXLULDTier iexluldTier = IEXLULDTier.getLULDTier(bytes[30]);
+
         return new IEXSecurityDirectoryMessage(iexMessageType, iexSecurityDirectoryFlag, timestamp, symbol, roundLotSize,
                 adjustedPOCPrice, iexluldTier);
     }

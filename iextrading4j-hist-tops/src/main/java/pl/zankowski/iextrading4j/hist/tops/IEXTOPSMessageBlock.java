@@ -14,7 +14,7 @@ import java.util.List;
 
 public class IEXTOPSMessageBlock extends IEXSegment {
 
-    public IEXTOPSMessageBlock(IEXMessageHeader messageHeader, List<IEXMessage> messages) {
+    public IEXTOPSMessageBlock(final IEXMessageHeader messageHeader, final List<IEXMessage> messages) {
         super(messageHeader, messages);
     }
 

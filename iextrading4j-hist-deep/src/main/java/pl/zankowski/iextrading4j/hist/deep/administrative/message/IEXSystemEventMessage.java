@@ -26,6 +26,7 @@ public class IEXSystemEventMessage extends IEXMessage {
     public static IEXMessage createIEXMessage(IEXMessageType iexMessageType, byte[] bytes) {
         final IEXSystemEvent iexSystemEvent = IEXSystemEvent.getSystemEvent(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
+
         return new IEXSystemEventMessage(iexMessageType, iexSystemEvent, timestamp);
     }
 

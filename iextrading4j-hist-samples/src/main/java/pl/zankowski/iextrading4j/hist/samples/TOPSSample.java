@@ -12,18 +12,18 @@ import pl.zankowski.iextrading4j.hist.tops.IEXTOPSMessageBlock;
 public class TOPSSample {
 
     public static void main(String[] args) throws PcapNativeException, InterruptedException, NotOpenException {
-        TOPSSample topsSample = new TOPSSample();
+        final TOPSSample topsSample = new TOPSSample();
         topsSample.readTOPSsample();
     }
 
     private void readTOPSsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+        final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
 
         handle.loop(-1, new PacketListener() {
             @Override
-            public void gotPacket(Packet packet) {
-                byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
-                IEXSegment block = IEXTOPSMessageBlock.createIEXSegment(data);
+            public void gotPacket(final Packet packet) {
+                final byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
+                final IEXSegment block = IEXTOPSMessageBlock.createIEXSegment(data);
                 System.out.println(block);
             }
         });
