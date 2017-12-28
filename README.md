@@ -1,6 +1,7 @@
 # IEXTrading4j HIST: Open source IEX Trading TOPS and DEEP library
 
 [![Build Status](https://travis-ci.org/WojciechZankowski/iextrading4j-hist.svg?branch=master)](https://travis-ci.org/WojciechZankowski/iextrading4j-hist)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.zankowski/iextrading4j-hist-all/badge.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pl.zankowski%22%20AND%20a%3A%22iextrading4j-hist-all%22)
 
 ## Table of Contents
 
