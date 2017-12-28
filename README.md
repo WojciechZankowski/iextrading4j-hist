@@ -71,7 +71,7 @@ TOPS also provides last trade price and size information. Trades resulting from 
 
 ## Sample
 
-To run samples it is required to have pcap library (e.g. Npcap or WinPcap) installed on computer.
+To run samples it is required to have pcap library (Npcap recommended) installed on computer.
 
 ### TOPS
 
