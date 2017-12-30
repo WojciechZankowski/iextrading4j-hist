@@ -24,7 +24,7 @@ Java SE 8 is required to use IEXTrading4j HIST library.
 <dependency>
 	<groupId>pl.zankowski</groupId>
 	<artifactId>iextrading4j-hist-all</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 </dependency>
 ```
 
