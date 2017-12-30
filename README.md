@@ -115,7 +115,8 @@ private void readDEEPsample() throws PcapNativeException, InterruptedException, 
 
 ## Roadmap
 
-* Support TOPS v1.6
+* Code coverage
+* Cleanup
 
 ## License
 
