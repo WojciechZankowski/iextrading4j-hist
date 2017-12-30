@@ -5,9 +5,6 @@ import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXByteConverterTest {
 
     @Test

@@ -6,8 +6,11 @@ import org.pcap4j.core.PcapHandle;
 import org.pcap4j.core.PcapNativeException;
 import org.pcap4j.core.Pcaps;
 import org.pcap4j.packet.Packet;
+import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.deep.IEXDEEPMessageBlock;
+
+import java.util.List;
 
 public class DEEPSample {
 
@@ -17,7 +20,7 @@ public class DEEPSample {
     }
 
     private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+        final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.MICRO);
 
         handle.loop(-1, new PacketListener() {
             @Override
@@ -30,4 +33,5 @@ public class DEEPSample {
 
         handle.close();
     }
+
 }

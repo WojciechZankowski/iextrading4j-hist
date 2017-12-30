@@ -3,9 +3,6 @@ package pl.zankowski.iextrading4j.hist.api.util;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXByteTestUtil {
 
     public static byte[] convert(long value) {
@@ -37,7 +34,7 @@ public class IEXByteTestUtil {
     }
 
     public static byte[] prepareBytes(int capacity, Object... objects) {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(capacity);
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(capacity);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         for (Object object : objects) {
             if (object instanceof Long) {

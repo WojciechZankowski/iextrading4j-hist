@@ -8,13 +8,9 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 import pl.zankowski.iextrading4j.hist.tops.message.builder.IEXQuoteUpdateMessageDataBuilder;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXTOPSMessageBlockTest {
 
     @Test

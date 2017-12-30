@@ -9,9 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static pl.zankowski.iextrading4j.hist.api.message.builder.IEXMessageHeaderDataBuilder.defaultMessageHeader;
 import static pl.zankowski.iextrading4j.hist.api.message.builder.IEXTradeMessageDataBuilder.defaultTradeMessage;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXSegmentTest {
 
     @Test

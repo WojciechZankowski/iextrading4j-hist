@@ -4,9 +4,16 @@ import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
-import pl.zankowski.iextrading4j.hist.api.message.IEXTradeMessage;
+import pl.zankowski.iextrading4j.hist.api.message.administrative.IEXOperationalHaltStatusMessage;
+import pl.zankowski.iextrading4j.hist.api.message.administrative.IEXSecurityDirectoryMessage;
+import pl.zankowski.iextrading4j.hist.api.message.administrative.IEXShortSalePriceTestStatusMessage;
+import pl.zankowski.iextrading4j.hist.api.message.administrative.IEXSystemEventMessage;
+import pl.zankowski.iextrading4j.hist.api.message.administrative.IEXTradingStatusMessage;
+import pl.zankowski.iextrading4j.hist.api.message.auction.IEXAuctionInformationMessage;
+import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
-import pl.zankowski.iextrading4j.hist.tops.message.IEXQuoteUpdateMessage;
+import pl.zankowski.iextrading4j.hist.api.message.trading.IEXOfficialPriceMessage;
+import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +21,7 @@ import java.util.List;
 
 public class IEXTOPSMessageBlock extends IEXSegment {
 
-    public IEXTOPSMessageBlock(final IEXMessageHeader messageHeader, final List<IEXMessage> messages) {
+    private IEXTOPSMessageBlock(final IEXMessageHeader messageHeader, final List<IEXMessage> messages) {
         super(messageHeader, messages);
     }
 
@@ -34,10 +41,6 @@ public class IEXTOPSMessageBlock extends IEXSegment {
 
 
     private static IEXMessage resolveMessage(final byte[] bytes) {
-        if (bytes.length != 42) {
-            throw new IllegalArgumentException("IEX TOPS Message has to contain 42 bytes");
-        }
-
         final IEXMessageType messageType = IEXMessageType.getMessageType(bytes[0]);
 
         switch (messageType) {
@@ -47,8 +50,22 @@ public class IEXTOPSMessageBlock extends IEXSegment {
                 return IEXTradeMessage.createIEXMessage(messageType, bytes);
             case TRADE_BREAK:
                 return IEXTradeMessage.createIEXMessage(messageType, bytes);
+            case OFFICIAL_PRICE_MESSAGE:
+                return IEXOfficialPriceMessage.createIEXMessage(messageType, bytes);
+            case SYSTEM_EVENT:
+                return IEXSystemEventMessage.createIEXMessage(messageType, bytes);
+            case SECURITY_DIRECTORY:
+                return IEXSecurityDirectoryMessage.createIEXMessage(messageType, bytes);
+            case TRADING_STATUS:
+                return IEXTradingStatusMessage.createIEXMessage(messageType, bytes);
+            case OPERATIONAL_HALT_STATUS:
+                return IEXOperationalHaltStatusMessage.createIEXMessage(messageType, bytes);
+            case SHORT_SALE_PRICE_TEST_STATUS:
+                return IEXShortSalePriceTestStatusMessage.createIEXMessage(messageType, bytes);
+            case AUCTION_INFORMATION:
+                return IEXAuctionInformationMessage.createIEXMessage(messageType, bytes);
             default:
-                return new IEXMessage();
+                throw new IllegalArgumentException("Failed to create IEX Message. Message type not supported: " + messageType);
         }
     }
 

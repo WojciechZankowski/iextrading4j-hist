@@ -13,6 +13,7 @@ public enum IEXMessageType {
     SECURITY_EVENT((byte) 0x45),
     PRICE_LEVEL_UPDATE_BUY((byte) 0x38),
     PRICE_LEVEL_UPDATE_SELL((byte) 0x35),
+    OFFICIAL_PRICE_MESSAGE((byte) 0x58),
     AUCTION_INFORMATION((byte) 0x41),
     UNKNOWN((byte) 0x11);
 
@@ -23,9 +24,9 @@ public enum IEXMessageType {
     }
 
     public static IEXMessageType getMessageType(final byte code) {
-        for (IEXMessageType iexMessageType : values()) {
-            if (iexMessageType.getCode() == code) {
-                return iexMessageType;
+        for (IEXMessageType messageType : values()) {
+            if (messageType.getCode() == code) {
+                return messageType;
             }
         }
         return IEXMessageType.UNKNOWN;

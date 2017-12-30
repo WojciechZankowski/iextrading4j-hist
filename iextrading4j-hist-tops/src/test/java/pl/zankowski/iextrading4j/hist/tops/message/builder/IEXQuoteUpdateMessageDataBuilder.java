@@ -3,12 +3,9 @@ package pl.zankowski.iextrading4j.hist.tops.message.builder;
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
-import pl.zankowski.iextrading4j.hist.tops.field.IEXMessageFlag;
-import pl.zankowski.iextrading4j.hist.tops.message.IEXQuoteUpdateMessage;
+import pl.zankowski.iextrading4j.hist.tops.trading.field.IEXMessageFlag;
+import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXQuoteUpdateMessageDataBuilder {
 
     private IEXMessageType messageType = IEXMessageType.QUOTE_UPDATE;

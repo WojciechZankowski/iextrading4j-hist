@@ -3,9 +3,6 @@ package pl.zankowski.iextrading4j.hist.api.message.builder;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXMessageHeaderDataBuilder {
 
     private byte version = 1;

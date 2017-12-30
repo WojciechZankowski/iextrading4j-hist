@@ -1,11 +1,12 @@
 package pl.zankowski.iextrading4j.hist.api.field;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 import static java.lang.Long.compare;
 
-public class IEXPrice implements Comparable<IEXPrice> {
+public class IEXPrice implements Comparable<IEXPrice>, Serializable {
 
     private static final int SCALE = 4;
 
@@ -17,6 +18,11 @@ public class IEXPrice implements Comparable<IEXPrice> {
 
     public long getNumber() {
         return number;
+    }
+
+    public BigDecimal toBigDecimal() {
+        return BigDecimal.valueOf(number)
+                .scaleByPowerOfTen(-SCALE);
     }
 
     @Override
@@ -39,8 +45,7 @@ public class IEXPrice implements Comparable<IEXPrice> {
 
     @Override
     public String toString() {
-        return BigDecimal.valueOf(number)
-                .scaleByPowerOfTen(-SCALE)
+        return toBigDecimal()
                 .toString();
     }
 }

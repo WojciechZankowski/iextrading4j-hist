@@ -1,17 +1,16 @@
 package pl.zankowski.iextrading4j.hist.tops.message;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
-import pl.zankowski.iextrading4j.hist.tops.field.IEXMessageFlag;
+import pl.zankowski.iextrading4j.hist.tops.trading.field.IEXMessageFlag;
+import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.zankowski.iextrading4j.hist.tops.message.builder.IEXQuoteUpdateMessageDataBuilder.defaultQuoteMessage;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXQuoteUpdateMessageTest {
 
     @Test
@@ -46,6 +45,13 @@ public class IEXQuoteUpdateMessageTest {
 
         assertThat(iexQuoteUpdateMessage_1).isEqualTo(iexQuoteUpdateMessage_2);
         assertThat(iexQuoteUpdateMessage_1.hashCode()).isEqualTo(iexQuoteUpdateMessage_2.hashCode());
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.forClass(IEXQuoteUpdateMessage.class)
+                .usingGetClass()
+                .verify();
     }
 
 }

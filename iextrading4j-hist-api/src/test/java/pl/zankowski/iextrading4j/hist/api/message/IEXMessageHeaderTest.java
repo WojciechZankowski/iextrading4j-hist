@@ -6,9 +6,6 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.zankowski.iextrading4j.hist.api.message.builder.IEXMessageHeaderDataBuilder.defaultMessageHeader;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXMessageHeaderTest {
 
     @Test

@@ -2,16 +2,13 @@ package pl.zankowski.iextrading4j.hist.api.message.builder;
 
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
-import pl.zankowski.iextrading4j.hist.api.field.IEXSaleConditionFlag;
-import pl.zankowski.iextrading4j.hist.api.message.IEXTradeMessage;
+import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
+import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXTradeMessageDataBuilder {
 
-    private IEXMessageType iexMessageType = IEXMessageType.TRADE_REPORT;
+    private IEXMessageType messageType = IEXMessageType.TRADE_REPORT;
     private IEXSaleConditionFlag iexSaleConditionFlag = IEXSaleConditionFlag.ODD_LOT_FLAG;
     private long timestamp = 1494855809990928826L;
     private String symbol = "SNAP    ";
@@ -32,12 +29,12 @@ public class IEXTradeMessageDataBuilder {
     }
 
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(42, iexMessageType.getCode(), iexSaleConditionFlag.getCode(), timestamp, symbol, size,
+        return IEXByteTestUtil.prepareBytes(42, messageType.getCode(), iexSaleConditionFlag.getCode(), timestamp, symbol, size,
                 price.getNumber(), tradeID);
     }
 
     public IEXTradeMessage build() {
-        return IEXTradeMessage.createIEXMessage(iexMessageType, getBytes());
+        return IEXTradeMessage.createIEXMessage(messageType, getBytes());
     }
 
 }

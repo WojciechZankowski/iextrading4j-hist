@@ -1,13 +1,11 @@
 package pl.zankowski.iextrading4j.hist.api.field;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author Wojciech Zankowski
- */
 public class IEXPriceTest {
 
     @Test
@@ -66,6 +64,13 @@ public class IEXPriceTest {
         IEXPrice iexPrice_2 = new IEXPrice(number);
 
         assertThat(iexPrice_1.compareTo(iexPrice_2)).isEqualTo(0);
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.forClass(IEXPrice.class)
+                .usingGetClass()
+                .verify();
     }
 
 }
