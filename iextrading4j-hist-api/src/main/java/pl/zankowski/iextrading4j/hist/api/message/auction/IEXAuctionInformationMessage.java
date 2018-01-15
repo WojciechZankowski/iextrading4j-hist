@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.auction;
 
-import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.auction.field.IEXAuctionType;
@@ -9,6 +8,8 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.AUCTION_INFORMATION;
 
 public class IEXAuctionInformationMessage extends IEXMessage {
 
@@ -28,7 +29,6 @@ public class IEXAuctionInformationMessage extends IEXMessage {
     private final IEXPrice upperAuctionCollar;
 
     private IEXAuctionInformationMessage(
-            final IEXMessageType messageType,
             final IEXAuctionType auctionType,
             final long timestamp,
             final String symbol,
@@ -43,7 +43,7 @@ public class IEXAuctionInformationMessage extends IEXMessage {
             final IEXPrice collarReferencePrice,
             final IEXPrice lowerAuctionCollar,
             final IEXPrice upperAuctionCollar) {
-        super(messageType);
+        super(AUCTION_INFORMATION);
         this.auctionType = auctionType;
         this.timestamp = timestamp;
         this.symbol = symbol;
@@ -60,7 +60,7 @@ public class IEXAuctionInformationMessage extends IEXMessage {
         this.upperAuctionCollar = upperAuctionCollar;
     }
 
-    public static IEXMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+    public static IEXAuctionInformationMessage createIEXMessage(final byte[] bytes) {
         final IEXAuctionType auctionType = IEXAuctionType.getAuctionType(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
@@ -76,7 +76,7 @@ public class IEXAuctionInformationMessage extends IEXMessage {
         final IEXPrice lowerAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 64, 72));
         final IEXPrice upperAuctionCollar = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 72, 80));
 
-        return new IEXAuctionInformationMessage(messageType, auctionType, timestamp, symbol, pairedShares, referencePrice, indicativeClearingPrice,
+        return new IEXAuctionInformationMessage(auctionType, timestamp, symbol, pairedShares, referencePrice, indicativeClearingPrice,
                 imbalanceShares, imbalanceSide, extensionNumber, scheduledAuctionTime, auctionBookClearingPrice, collarReferencePrice,
                 lowerAuctionCollar, upperAuctionCollar);
     }

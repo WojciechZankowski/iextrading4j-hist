@@ -1,12 +1,13 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
-import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXTradingStatus;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.TRADING_STATUS;
 
 public class IEXTradingStatusMessage extends IEXMessage {
 
@@ -16,25 +17,24 @@ public class IEXTradingStatusMessage extends IEXMessage {
     private final String reason;
 
     private IEXTradingStatusMessage(
-            final IEXMessageType messageType,
             final IEXTradingStatus tradingStatus,
             final long timestamp,
             final String symbol,
             final String reason) {
-        super(messageType);
+        super(TRADING_STATUS);
         this.tradingStatus = tradingStatus;
         this.timestamp = timestamp;
         this.symbol = symbol;
         this.reason = reason;
     }
 
-    public static IEXMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
+    public static IEXTradingStatusMessage createIEXMessage(final byte[] bytes) {
         final IEXTradingStatus tradingStatus = IEXTradingStatus.getTradingStatus(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final String reason = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 18, 22));
 
-        return new IEXTradingStatusMessage(messageType, tradingStatus, timestamp, symbol, reason);
+        return new IEXTradingStatusMessage(tradingStatus, timestamp, symbol, reason);
     }
 
     public IEXTradingStatus getTradingStatus() {

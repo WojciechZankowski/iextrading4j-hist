@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
-import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXSystemEvent;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
@@ -8,25 +7,26 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SYSTEM_EVENT;
+
 public class IEXSystemEventMessage extends IEXMessage {
 
     private final IEXSystemEvent systemEvent;
     private final long timestamp;
 
     private IEXSystemEventMessage(
-            final IEXMessageType messageType,
             final IEXSystemEvent systemEvent,
             final long timestamp) {
-        super(messageType);
+        super(SYSTEM_EVENT);
         this.systemEvent = systemEvent;
         this.timestamp = timestamp;
     }
 
-    public static IEXMessage createIEXMessage(IEXMessageType messageType, byte[] bytes) {
+    public static IEXSystemEventMessage createIEXMessage(final byte[] bytes) {
         final IEXSystemEvent systemEvent = IEXSystemEvent.getSystemEvent(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
 
-        return new IEXSystemEventMessage(messageType, systemEvent, timestamp);
+        return new IEXSystemEventMessage(systemEvent, timestamp);
     }
 
     public IEXSystemEvent getSystemEvent() {

@@ -35,7 +35,7 @@ public class IEXQuoteUpdateMessageDataBuilder {
     }
 
     public IEXQuoteUpdateMessage build() {
-        return IEXQuoteUpdateMessage.createIEXMessage(messageType, getBytes());
+        return IEXQuoteUpdateMessage.createIEXMessage(getBytes());
     }
 
 }

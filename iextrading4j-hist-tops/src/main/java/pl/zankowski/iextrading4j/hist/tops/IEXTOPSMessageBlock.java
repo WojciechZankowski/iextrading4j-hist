@@ -45,25 +45,25 @@ public class IEXTOPSMessageBlock extends IEXSegment {
 
         switch (messageType) {
             case QUOTE_UPDATE:
-                return IEXQuoteUpdateMessage.createIEXMessage(messageType, bytes);
+                return IEXQuoteUpdateMessage.createIEXMessage(bytes);
             case TRADE_REPORT:
                 return IEXTradeMessage.createIEXMessage(messageType, bytes);
             case TRADE_BREAK:
                 return IEXTradeMessage.createIEXMessage(messageType, bytes);
             case OFFICIAL_PRICE_MESSAGE:
-                return IEXOfficialPriceMessage.createIEXMessage(messageType, bytes);
+                return IEXOfficialPriceMessage.createIEXMessage(bytes);
             case SYSTEM_EVENT:
-                return IEXSystemEventMessage.createIEXMessage(messageType, bytes);
+                return IEXSystemEventMessage.createIEXMessage(bytes);
             case SECURITY_DIRECTORY:
-                return IEXSecurityDirectoryMessage.createIEXMessage(messageType, bytes);
+                return IEXSecurityDirectoryMessage.createIEXMessage(bytes);
             case TRADING_STATUS:
-                return IEXTradingStatusMessage.createIEXMessage(messageType, bytes);
+                return IEXTradingStatusMessage.createIEXMessage(bytes);
             case OPERATIONAL_HALT_STATUS:
-                return IEXOperationalHaltStatusMessage.createIEXMessage(messageType, bytes);
+                return IEXOperationalHaltStatusMessage.createIEXMessage(bytes);
             case SHORT_SALE_PRICE_TEST_STATUS:
-                return IEXShortSalePriceTestStatusMessage.createIEXMessage(messageType, bytes);
+                return IEXShortSalePriceTestStatusMessage.createIEXMessage(bytes);
             case AUCTION_INFORMATION:
-                return IEXAuctionInformationMessage.createIEXMessage(messageType, bytes);
+                return IEXAuctionInformationMessage.createIEXMessage(bytes);
             default:
                 throw new IllegalArgumentException("Failed to create IEX Message. Message type not supported: " + messageType);
         }

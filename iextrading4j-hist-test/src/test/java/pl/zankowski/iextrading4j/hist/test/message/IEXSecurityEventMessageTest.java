@@ -1,9 +1,10 @@
-package pl.zankowski.iextrading4j.hist.test;
+package pl.zankowski.iextrading4j.hist.test.message;
 
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.deep.administrative.IEXSecurityEventMessage;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXSecurityEvent;
+import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 
 import java.io.IOException;
 
@@ -15,8 +16,7 @@ public class IEXSecurityEventMessageTest extends ExtendedUnitTestBase {
     public void testSecurityEventMessage() throws IOException {
         final byte[] bytes = loadPacket("IEXSecurityEventMessage.dump");
 
-        final IEXSecurityEventMessage message = IEXSecurityEventMessage.createIEXMessage(
-                IEXMessageType.SECURITY_EVENT, bytes);
+        final IEXSecurityEventMessage message = IEXSecurityEventMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_EVENT);
         assertThat(message.getSymbol()).isEqualTo("ACRX");

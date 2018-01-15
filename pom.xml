@@ -7,7 +7,7 @@
     <groupId>pl.zankowski</groupId>
     <artifactId>iextrading4j-hist</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.1.0</version>
 
     <name>IEXTrading4j HIST</name>
     <description>IEX Trading library to parse TOPS and DEEP multicast packets</description>
@@ -41,6 +41,7 @@
         <module>iextrading4j-hist-deep</module>
         <module>iextrading4j-hist-all</module>
         <module>iextrading4j-hist-test</module>
+        <module>iextrading4j-hist-performance</module>
     </modules>
 
     <properties>
@@ -62,13 +63,13 @@
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-api</artifactId>
-                <version>1.2.0-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-api</artifactId>
-                <version>1.2.0-SNAPSHOT</version>
+                <version>1.1.0</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -76,25 +77,37 @@
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-tops</artifactId>
-                <version>1.2.0-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-deep</artifactId>
-                <version>1.2.0-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-samples</artifactId>
-                <version>1.2.0-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
 
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>23.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-core</artifactId>
+                <version>1.19</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>1.19</version>
             </dependency>
 
             <dependency>
@@ -220,7 +233,7 @@
                             <id>report</id>
                             <phase>test</phase>
                             <goals>
-                                <goal>report</goal>
+                                <goal>report-aggregate</goal>
                             </goals>
                         </execution>
                     </executions>

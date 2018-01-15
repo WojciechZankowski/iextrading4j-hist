@@ -32,7 +32,7 @@ public class IEXPriceLevelUpdateMessage extends IEXMessage {
         this.price = price;
     }
 
-    public static IEXMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+    public static IEXPriceLevelUpdateMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
         final IEXEventFlag eventFlag = IEXEventFlag.getEventFlag(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

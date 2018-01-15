@@ -2,7 +2,6 @@ package pl.zankowski.iextrading4j.hist.api.field;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
-import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

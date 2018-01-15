@@ -1,10 +1,11 @@
-package pl.zankowski.iextrading4j.hist.test;
+package pl.zankowski.iextrading4j.hist.test.segment;
 
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
+import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 import pl.zankowski.iextrading4j.hist.tops.IEXTOPSMessageBlock;
 import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
 import pl.zankowski.iextrading4j.hist.tops.trading.field.IEXMessageFlag;

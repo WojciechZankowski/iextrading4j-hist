@@ -26,7 +26,7 @@ public class IEXQuoteUpdateMessageTest {
 
         byte[] data = IEXByteTestUtil.prepareBytes(42, messageType.getCode(), messageFlag.getFlag(),
                 timestamp, symbol, bidSize, bidPrice.getNumber(), askPrice.getNumber(), askSize);
-        IEXQuoteUpdateMessage iexQuoteUpdateMessage = IEXQuoteUpdateMessage.createIEXMessage(messageType, data);
+        IEXQuoteUpdateMessage iexQuoteUpdateMessage = IEXQuoteUpdateMessage.createIEXMessage(data);
 
         assertThat(iexQuoteUpdateMessage.getMessageType()).isEqualTo(messageType);
         assertThat(iexQuoteUpdateMessage.getMessageFlag()).isEqualTo(messageFlag);

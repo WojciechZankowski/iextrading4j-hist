@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
-import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXLULDTier;
@@ -9,6 +8,8 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SECURITY_DIRECTORY;
 
 public class IEXSecurityDirectoryMessage extends IEXMessage {
 
@@ -20,14 +21,13 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     private final IEXLULDTier luldTier;
 
     private IEXSecurityDirectoryMessage(
-            final IEXMessageType messageType,
             final IEXSecurityDirectoryFlag securityDirectoryFlag,
             final long timestamp,
             final String symbol,
             final int roundLotSize,
             final IEXPrice adjustedPOCPrice,
             final IEXLULDTier luldTier) {
-        super(messageType);
+        super(SECURITY_DIRECTORY);
         this.securityDirectoryFlag = securityDirectoryFlag;
         this.timestamp = timestamp;
         this.symbol = symbol;
@@ -60,7 +60,7 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
         return luldTier;
     }
 
-    public static IEXSecurityDirectoryMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+    public static IEXSecurityDirectoryMessage createIEXMessage(final byte[] bytes) {
         final IEXSecurityDirectoryFlag iexSecurityDirectoryFlag = IEXSecurityDirectoryFlag.getSecurityDirectoryFlag(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
@@ -68,7 +68,7 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
         final IEXPrice adjustedPOCPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 22, 30));
         final IEXLULDTier iexluldTier = IEXLULDTier.getLULDTier(bytes[30]);
 
-        return new IEXSecurityDirectoryMessage(messageType, iexSecurityDirectoryFlag, timestamp, symbol, roundLotSize,
+        return new IEXSecurityDirectoryMessage(iexSecurityDirectoryFlag, timestamp, symbol, roundLotSize,
                 adjustedPOCPrice, iexluldTier);
     }
 

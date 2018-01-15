@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
-import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXDetail;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXShortSalePriceTestStatus;
@@ -8,6 +7,8 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS;
 
 public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
 
@@ -17,25 +18,24 @@ public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
     private final IEXDetail detail;
 
     private IEXShortSalePriceTestStatusMessage(
-            final IEXMessageType messageType,
             final IEXShortSalePriceTestStatus shortSalePriceTestStatus,
             final long timestamp,
             final String symbol,
             final IEXDetail detail) {
-        super(messageType);
+        super(SHORT_SALE_PRICE_TEST_STATUS);
         this.shortSalePriceTestStatus = shortSalePriceTestStatus;
         this.timestamp = timestamp;
         this.symbol = symbol;
         this.detail = detail;
     }
 
-    public static IEXMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+    public static IEXShortSalePriceTestStatusMessage createIEXMessage(final byte[] bytes) {
         final IEXShortSalePriceTestStatus shortSalePriceTestStatus = IEXShortSalePriceTestStatus.getShortSalePriceTestStatus(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final IEXDetail detail = IEXDetail.getDetail(bytes[18]);
 
-        return new IEXShortSalePriceTestStatusMessage(messageType, shortSalePriceTestStatus, timestamp, symbol, detail);
+        return new IEXShortSalePriceTestStatusMessage(shortSalePriceTestStatus, timestamp, symbol, detail);
     }
 
     public IEXShortSalePriceTestStatus getShortSalePriceTestStatus() {

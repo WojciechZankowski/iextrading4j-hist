@@ -2,8 +2,8 @@ package pl.zankowski.iextrading4j.hist.api.message.trading;
 
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
-import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
+import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;

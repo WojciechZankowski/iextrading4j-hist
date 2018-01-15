@@ -1,12 +1,13 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative;
 
-import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXSecurityEvent;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SECURITY_EVENT;
 
 public class IEXSecurityEventMessage extends IEXMessage {
 
@@ -15,22 +16,21 @@ public class IEXSecurityEventMessage extends IEXMessage {
     private final String symbol;
 
     private IEXSecurityEventMessage(
-            final IEXMessageType messageType,
             final IEXSecurityEvent securityEvent,
             final long timestamp,
             final String symbol) {
-        super(messageType);
+        super(SECURITY_EVENT);
         this.securityEvent = securityEvent;
         this.timestamp = timestamp;
         this.symbol = symbol;
     }
 
-    public static IEXSecurityEventMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
+    public static IEXSecurityEventMessage createIEXMessage(final byte[] bytes) {
         final IEXSecurityEvent iexSecurityEvent = IEXSecurityEvent.getSecurityEvent(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
 
-        return new IEXSecurityEventMessage(messageType, iexSecurityEvent, timestamp, symbol);
+        return new IEXSecurityEventMessage(iexSecurityEvent, timestamp, symbol);
     }
 
     public IEXSecurityEvent getSecurityEvent() {

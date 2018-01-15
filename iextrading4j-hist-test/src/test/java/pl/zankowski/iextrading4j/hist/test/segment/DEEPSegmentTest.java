@@ -1,4 +1,4 @@
-package pl.zankowski.iextrading4j.hist.test;
+package pl.zankowski.iextrading4j.hist.test.segment;
 
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
@@ -7,20 +7,21 @@ import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
 import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
-import pl.zankowski.iextrading4j.hist.tops.IEXTOPSMessageBlock;
+import pl.zankowski.iextrading4j.hist.deep.IEXDEEPMessageBlock;
+import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 
 import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TOPS16SegmentTest extends ExtendedUnitTestBase {
+public class DEEPSegmentTest extends ExtendedUnitTestBase {
 
     @Test
-    public void testTOPS16Segment() throws IOException {
-        final byte[] packet = loadPacket("TOPS16Segment.dump");
+    public void testDeepSegment() throws IOException {
+        final byte[] packet = loadPacket("DEEPSegment.dump");
 
-        final IEXTOPSMessageBlock segment = (IEXTOPSMessageBlock) IEXTOPSMessageBlock.createIEXSegment(packet);
+        final IEXDEEPMessageBlock segment = IEXDEEPMessageBlock.createIEXSegment(packet);
 
         final IEXMessageHeader messageHeader = segment.getMessageHeader();
         assertThat(messageHeader.getVersion()).isEqualTo((byte) 1);
@@ -28,8 +29,8 @@ public class TOPS16SegmentTest extends ExtendedUnitTestBase {
         assertThat(messageHeader.getSessionID()).isEqualTo(1145176064);
         assertThat(messageHeader.getPayloadLength()).isEqualTo((short) 40);
         assertThat(messageHeader.getMessageCount()).isEqualTo((short) 1);
-        assertThat(messageHeader.getStreamOffset()).isEqualTo(952260);
-        assertThat(messageHeader.getFirstMessageSequenceNumber()).isEqualTo(34343);
+        assertThat(messageHeader.getStreamOffset()).isEqualTo(578248);
+        assertThat(messageHeader.getFirstMessageSequenceNumber()).isEqualTo(25846);
         assertThat(messageHeader.getSendTime()).isEqualTo(1509799811104335442L);
 
         final List<IEXMessage> messages = segment.getMessages();
