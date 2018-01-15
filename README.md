@@ -24,14 +24,15 @@ Java SE 8 is required to use IEXTrading4j HIST library.
 <dependency>
 	<groupId>pl.zankowski</groupId>
 	<artifactId>iextrading4j-hist-all</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 </dependency>
 ```
 
 Library is up to:
 
-* TOPS version 1.56 - May 9, 2017
-* DEEP version 1.04 - August 1, 2017
+* TOPS 1.6 version 1.63 - December 20, 2017
+* TOPS 1.5 version 1.56 - May 9, 2017
+* DEEP version 1.05 - December 20, 2017
 
 ## Description
 
@@ -114,7 +115,8 @@ private void readDEEPsample() throws PcapNativeException, InterruptedException, 
 
 ## Roadmap
 
-* Support TOPS v1.6
+* Code coverage
+* Cleanup
 
 ## License
 
