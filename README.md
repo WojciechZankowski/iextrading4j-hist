@@ -31,9 +31,9 @@ Java SE 8 is required to use IEXTrading4j HIST library.
 
 Library is up to:
 
-* TOPS 1.6 version 1.63 - December 20, 2017
+* TOPS 1.6 version 1.64 - February 27, 2018
 * TOPS 1.5 version 1.56 - May 9, 2017
-* DEEP version 1.05 - December 20, 2017
+* DEEP version 1.06 - February 27, 2018
 
 ## Description
 
