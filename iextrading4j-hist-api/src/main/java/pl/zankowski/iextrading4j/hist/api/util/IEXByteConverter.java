@@ -27,8 +27,9 @@ public class IEXByteConverter {
     }
 
     public static short convertBytesToShort(final byte[] bytes) {
-        return (short) ((0xff & bytes[1]) << 8
-                | (0xff & bytes[0]) << 0);
+        return (short) (
+                (0xff & bytes[1]) << 8 |
+                (0xff & bytes[0]) << 0);
     }
 
     public static String convertBytesToString(final byte[] bytes) {
