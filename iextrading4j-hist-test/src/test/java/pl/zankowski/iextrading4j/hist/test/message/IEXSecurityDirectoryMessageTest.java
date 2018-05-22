@@ -22,7 +22,7 @@ public class IEXSecurityDirectoryMessageTest extends ExtendedUnitTestBase {
         final IEXSecurityDirectoryMessage message = createIEXMessage(packet);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_DIRECTORY);
-        assertThat(message.getSecurityDirectoryFlag()).isEqualTo(IEXSecurityDirectoryFlag.SYMBOL_IS_NOT_TEST);
+        assertThat(message.getSecurityDirectoryFlag()).isEqualTo(IEXSecurityDirectoryFlag.SYMBOL_IS_TEST);
         assertThat(message.getTimestamp()).isEqualTo(1509795046090464161L);
         assertThat(message.getSymbol()).isEqualTo("ZEXIT");
         assertThat(message.getRoundLotSize()).isEqualTo(100);

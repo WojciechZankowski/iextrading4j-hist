@@ -1,9 +1,10 @@
 package pl.zankowski.iextrading4j.hist.api.message.builder;
 
+import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
-public class IEXMessageHeaderDataBuilder {
+public class IEXMessageHeaderDataBuilder implements TestDataBuilder {
 
     private byte version = 1;
     private byte reserved = 1;
@@ -33,6 +34,7 @@ public class IEXMessageHeaderDataBuilder {
         return this;
     }
 
+    @Override
     public byte[] getBytes() {
         return IEXByteTestUtil.prepareBytes(40, version, reserved, messageProtocolID, channelID, sessionID,
                 payloadLength, messageCount, streamOffset, firstMessageSequenceNumber, sendTime);

@@ -1,6 +1,6 @@
 package pl.zankowski.iextrading4j.hist.api;
 
-public enum IEXMessageType {
+public enum IEXMessageType implements IEXByteEnum {
 
     QUOTE_UPDATE((byte) 0x51),
     TRADE_REPORT((byte) 0x54),
@@ -32,6 +32,7 @@ public enum IEXMessageType {
         return IEXMessageType.UNKNOWN;
     }
 
+    @Override
     public byte getCode() {
         return code;
     }

@@ -2,11 +2,11 @@ package pl.zankowski.iextrading4j.hist.api.message.builder;
 
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
-import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
+import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
-public class IEXTradeMessageDataBuilder {
+public class IEXTradeMessageDataBuilder implements TestDataBuilder {
 
     private IEXMessageType messageType = IEXMessageType.TRADE_REPORT;
     private IEXSaleConditionFlag iexSaleConditionFlag = IEXSaleConditionFlag.ODD_LOT_FLAG;
@@ -28,6 +28,7 @@ public class IEXTradeMessageDataBuilder {
         return new IEXTradeMessageDataBuilder();
     }
 
+    @Override
     public byte[] getBytes() {
         return IEXByteTestUtil.prepareBytes(42, messageType.getCode(), iexSaleConditionFlag.getCode(), timestamp, symbol, size,
                 price.getNumber(), tradeID);

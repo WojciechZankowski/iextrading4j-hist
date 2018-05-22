@@ -17,14 +17,14 @@ public class TOPSSample {
     }
 
     private void readTOPSsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.NANO);
+        final PcapHandle handle = Pcaps.openOffline("C:\\Users\\wojci\\Desktop\\IEX\\20180127_IEXTP1_TOPS1.6.pcap", PcapHandle.TimestampPrecision.NANO);
 
         handle.loop(-1, new PacketListener() {
             @Override
             public void gotPacket(final Packet packet) {
                 final byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
                 final IEXSegment block = IEXTOPSMessageBlock.createIEXSegment(data);
-                System.out.println(block);
+//                System.out.println(block);
             }
         });
 
