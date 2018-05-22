@@ -1,5 +1,11 @@
 package pl.zankowski.iextrading4j.hist.api;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
+import static pl.zankowski.iextrading4j.hist.api.util.IEXByteEnumLookupUtil.lookup;
+
 public enum IEXMessageType implements IEXByteEnum {
 
     QUOTE_UPDATE((byte) 0x51),
@@ -14,22 +20,23 @@ public enum IEXMessageType implements IEXByteEnum {
     PRICE_LEVEL_UPDATE_BUY((byte) 0x38),
     PRICE_LEVEL_UPDATE_SELL((byte) 0x35),
     OFFICIAL_PRICE_MESSAGE((byte) 0x58),
-    AUCTION_INFORMATION((byte) 0x41),
-    UNKNOWN((byte) 0x11);
+    AUCTION_INFORMATION((byte) 0x41);
+
+    private static final Map<Byte, IEXMessageType> LOOKUP = new HashMap<>();
+
+    static {
+        for (final IEXMessageType value : EnumSet.allOf(IEXMessageType.class))
+            LOOKUP.put(value.getCode(), value);
+    }
 
     private final byte code;
 
-    IEXMessageType(byte code) {
+    IEXMessageType(final byte code) {
         this.code = code;
     }
 
     public static IEXMessageType getMessageType(final byte code) {
-        for (IEXMessageType messageType : values()) {
-            if (messageType.getCode() == code) {
-                return messageType;
-            }
-        }
-        return IEXMessageType.UNKNOWN;
+        return lookup(IEXMessageType.class, LOOKUP, code);
     }
 
     @Override
