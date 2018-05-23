@@ -30,7 +30,7 @@ public class IEXQuoteUpdateMessageDataBuilder {
     }
 
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(42, messageType.getCode(), messageFlag.getFlag(),
+        return IEXByteTestUtil.prepareBytes(42, messageType.getCode(), messageFlag.getCode(),
                 timestamp, symbol, bidSize, bidPrice.getNumber(), askPrice.getNumber(), askSize);
     }
 

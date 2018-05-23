@@ -17,7 +17,27 @@
             <artifactId>iextrading4j-hist-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>pl.zankowski</groupId>
+            <artifactId>iextrading4j-hist-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.zankowski</groupId>
+            <artifactId>iextrading4j-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Tests -->
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>

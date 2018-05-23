@@ -24,6 +24,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>pl.zankowski</groupId>
+            <artifactId>iextrading4j-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Tests -->
 
         <dependency>
