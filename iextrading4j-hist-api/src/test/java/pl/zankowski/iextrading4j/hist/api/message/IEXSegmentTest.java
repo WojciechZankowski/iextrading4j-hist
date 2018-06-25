@@ -7,7 +7,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.zankowski.iextrading4j.hist.api.message.builder.IEXMessageHeaderDataBuilder.defaultMessageHeader;
-import static pl.zankowski.iextrading4j.hist.api.message.builder.IEXTradeMessageDataBuilder.defaultTradeMessage;
+import static pl.zankowski.iextrading4j.hist.api.message.trading.builder.IEXTradeMessageDataBuilder.defaultTradeMessage;
 
 public class IEXSegmentTest {
 

@@ -3,7 +3,6 @@ package pl.zankowski.iextrading4j.hist.tops.trading;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
-import pl.zankowski.iextrading4j.hist.tops.trading.field.IEXMessageFlag;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -12,7 +11,7 @@ import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.QUOTE_UPDATE;
 
 public class IEXQuoteUpdateMessage extends IEXMessage {
 
-    private final IEXMessageFlag messageFlag;
+    private final byte flag;
     private final long timestamp;
     private final String symbol;
     private final int bidSize;
@@ -21,7 +20,7 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
     private final int askSize;
 
     private IEXQuoteUpdateMessage(
-            final IEXMessageFlag messageFlag,
+            final byte flag,
             final long timestamp,
             final String symbol,
             final int bidSize,
@@ -29,7 +28,7 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
             final IEXPrice askPrice,
             final int askSize) {
         super(QUOTE_UPDATE);
-        this.messageFlag = messageFlag;
+        this.flag = flag;
         this.timestamp = timestamp;
         this.symbol = symbol;
         this.bidSize = bidSize;
@@ -39,7 +38,7 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
     }
 
     public static IEXQuoteUpdateMessage createIEXMessage(final byte[] bytes) {
-        final IEXMessageFlag messageFlag = IEXMessageFlag.getMessageFromFlag(bytes[1]);
+        final byte flag = bytes[1];
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final int bidSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
@@ -47,11 +46,15 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
         final IEXPrice askPrice = IEXByteConverter.convertBytesToIEXPrice(Arrays.copyOfRange(bytes, 30, 38));
         final int askSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 38, 42));
 
-        return new IEXQuoteUpdateMessage(messageFlag, timestamp, symbol, bidSize, bidPrice, askPrice, askSize);
+        return new IEXQuoteUpdateMessage(flag, timestamp, symbol, bidSize, bidPrice, askPrice, askSize);
     }
 
-    public IEXMessageFlag getMessageFlag() {
-        return messageFlag;
+    public boolean isHalted() {
+        return (flag & 0x80) != 0;
+    }
+
+    public boolean isPrePostMarketSession() {
+        return (flag & 0x40) != 0;
     }
 
     public long getTimestamp() {
@@ -87,7 +90,7 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
         return timestamp == that.timestamp &&
                 bidSize == that.bidSize &&
                 askSize == that.askSize &&
-                messageFlag == that.messageFlag &&
+                flag == that.flag &&
                 Objects.equals(symbol, that.symbol) &&
                 Objects.equals(bidPrice, that.bidPrice) &&
                 Objects.equals(askPrice, that.askPrice);
@@ -95,13 +98,13 @@ public class IEXQuoteUpdateMessage extends IEXMessage {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), messageFlag, timestamp, symbol, bidSize, bidPrice, askPrice, askSize);
+        return Objects.hash(super.hashCode(), flag, timestamp, symbol, bidSize, bidPrice, askPrice, askSize);
     }
 
     @Override
     public String toString() {
         return "IEXQuoteUpdateMessage{" +
-                "messageFlag=" + messageFlag +
+                "flag=" + flag +
                 ", timestamp=" + timestamp +
                 ", symbol='" + symbol + '\'' +
                 ", bidSize=" + bidSize +

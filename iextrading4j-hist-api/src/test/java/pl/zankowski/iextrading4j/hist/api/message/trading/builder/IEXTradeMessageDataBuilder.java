@@ -4,15 +4,14 @@ import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.builder.TestDataBuilder;
 import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
-import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
 public class IEXTradeMessageDataBuilder implements TestDataBuilder {
 
     private IEXMessageType messageType = IEXMessageType.TRADE_REPORT;
-    private IEXSaleConditionFlag saleConditionFlag = IEXSaleConditionFlag.INTERMARKET_SWEEP_FLAG;
+    private byte saleConditionFlag = (byte) -112;
     private long timestamp = 1494855059287436131L;
-    private String symbol = "SNAP";
+    private String symbol = "SNAP    ";
     private int size = 3;
     private IEXPrice price = new IEXPrice(1234L);
     private long tradeID = 12345L;
@@ -23,6 +22,11 @@ public class IEXTradeMessageDataBuilder implements TestDataBuilder {
 
     public static IEXTradeMessageDataBuilder tradeMessage() {
         return new IEXTradeMessageDataBuilder();
+    }
+
+    public IEXTradeMessageDataBuilder withFlag(final byte flag) {
+        this.saleConditionFlag = flag;
+        return this;
     }
 
     @Override

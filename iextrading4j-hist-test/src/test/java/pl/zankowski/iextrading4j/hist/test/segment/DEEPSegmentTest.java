@@ -6,7 +6,6 @@ import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
-import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.deep.IEXDEEPMessageBlock;
 import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 
@@ -36,7 +35,6 @@ public class DEEPSegmentTest extends ExtendedUnitTestBase {
         final List<IEXMessage> messages = segment.getMessages();
         final IEXTradeMessage message = (IEXTradeMessage) messages.get(0);
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.TRADE_REPORT);
-        assertThat(message.getSaleConditionFlag()).isEqualTo(IEXSaleConditionFlag.TRADE_IS_NOT_SUBJECT_TO_RULE_611);
         assertThat(message.getTimestamp()).isEqualTo(1509799811101738406L);
         assertThat(message.getSymbol()).isEqualTo("ZXIET");
         assertThat(message.getSize()).isEqualTo(471);

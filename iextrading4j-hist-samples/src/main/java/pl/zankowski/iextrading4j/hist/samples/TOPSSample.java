@@ -6,6 +6,7 @@ import org.pcap4j.core.PcapHandle;
 import org.pcap4j.core.PcapNativeException;
 import org.pcap4j.core.Pcaps;
 import org.pcap4j.packet.Packet;
+import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.tops.IEXTOPSMessageBlock;
 
@@ -17,14 +18,16 @@ public class TOPSSample {
     }
 
     private void readTOPSsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        final PcapHandle handle = Pcaps.openOffline("C:\\Users\\wojci\\Desktop\\IEX\\20180127_IEXTP1_TOPS1.6.pcap", PcapHandle.TimestampPrecision.NANO);
+        final PcapHandle handle = Pcaps.openOffline("F:\\IEX\\TOPS\\20161212_IEXTP1_TOPS1.5.pcap", PcapHandle.TimestampPrecision.NANO);
 
         handle.loop(-1, new PacketListener() {
             @Override
             public void gotPacket(final Packet packet) {
                 final byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
                 final IEXSegment block = IEXTOPSMessageBlock.createIEXSegment(data);
-//                System.out.println(block);
+                block.getMessages().stream()
+                        .filter(iexMessage -> iexMessage.getMessageType() == IEXMessageType.TRADE_REPORT)
+                        .forEach(System.out::println);
             }
         });
 

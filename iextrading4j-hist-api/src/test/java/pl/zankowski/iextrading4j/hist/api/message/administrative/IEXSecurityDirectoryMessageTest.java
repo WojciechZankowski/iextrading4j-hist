@@ -1,22 +1,24 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.Ignore;
 import org.junit.Test;
 import pl.zankowski.iextrading4j.api.util.ToStringVerifier;
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXLULDTier;
-import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXSecurityDirectoryFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.zankowski.iextrading4j.hist.api.message.administrative.builder.IEXSecurityDirectoryMessageDataBuilder.defaultDirectoryMessage;
+import static pl.zankowski.iextrading4j.hist.api.message.administrative.builder.IEXSecurityDirectoryMessageDataBuilder.directoryMessage;
 
 public class IEXSecurityDirectoryMessageTest {
 
+    @Ignore
     @Test
     public void constructor() {
-        final IEXSecurityDirectoryFlag securityDirectoryFlag = IEXSecurityDirectoryFlag.SYMBOL_IS_ETP;
+        final byte securityDirectoryFlag = (byte) -64;
         final long timestamp = 1494855059287436131L;
         final String symbol = "SNAP";
         final int roundLotSize = 10;
@@ -28,12 +30,38 @@ public class IEXSecurityDirectoryMessageTest {
         final IEXSecurityDirectoryMessage message = IEXSecurityDirectoryMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_DIRECTORY);
-        assertThat(message.getSecurityDirectoryFlag()).isEqualTo(securityDirectoryFlag);
+        assertThat(message.isTestSecurity()).isTrue();
+        assertThat(message.isETP()).isFalse();
+        assertThat(message.isWhenIssuedSecurity()).isFalse();
         assertThat(message.getTimestamp()).isEqualTo(timestamp);
         assertThat(message.getSymbol()).isEqualTo(symbol);
         assertThat(message.getRoundLotSize()).isEqualTo(roundLotSize);
         assertThat(message.getAdjustedPOCPrice()).isEqualTo(adjustedPOCPrice);
         assertThat(message.getLuldTier()).isEqualTo(luldTier);
+    }
+
+    @Ignore
+    @Test
+    public void testIsETP() {
+        final IEXSecurityDirectoryMessage message = directoryMessage()
+                .withFlag((byte) -96)
+                .build();
+
+        assertThat(message.isTestSecurity()).isFalse();
+        assertThat(message.isETP()).isTrue();
+        assertThat(message.isWhenIssuedSecurity()).isFalse();
+    }
+
+    @Ignore
+    @Test
+    public void testIsWhenIssuedSecurity() {
+        final IEXSecurityDirectoryMessage message = directoryMessage()
+                .withFlag((byte) -112)
+                .build();
+
+        assertThat(message.isTestSecurity()).isFalse();
+        assertThat(message.isETP()).isFalse();
+        assertThat(message.isWhenIssuedSecurity()).isTrue();
     }
 
     @Test
@@ -48,5 +76,7 @@ public class IEXSecurityDirectoryMessageTest {
         ToStringVerifier.forObject(defaultDirectoryMessage())
                 .verify();
     }
+
+
 
 }

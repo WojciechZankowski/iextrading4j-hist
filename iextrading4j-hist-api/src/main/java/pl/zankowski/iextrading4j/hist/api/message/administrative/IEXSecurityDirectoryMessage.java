@@ -3,7 +3,6 @@ package pl.zankowski.iextrading4j.hist.api.message.administrative;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXLULDTier;
-import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXSecurityDirectoryFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
@@ -13,7 +12,7 @@ import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SECURITY_DIRECTO
 
 public class IEXSecurityDirectoryMessage extends IEXMessage {
 
-    private final IEXSecurityDirectoryFlag securityDirectoryFlag;
+    private final byte securityDirectoryFlag;
     private final long timestamp;
     private final String symbol;
     private final int roundLotSize;
@@ -21,7 +20,7 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     private final IEXLULDTier luldTier;
 
     private IEXSecurityDirectoryMessage(
-            final IEXSecurityDirectoryFlag securityDirectoryFlag,
+            final byte securityDirectoryFlag,
             final long timestamp,
             final String symbol,
             final int roundLotSize,
@@ -36,8 +35,16 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
         this.luldTier = luldTier;
     }
 
-    public IEXSecurityDirectoryFlag getSecurityDirectoryFlag() {
-        return securityDirectoryFlag;
+    public boolean isTestSecurity() {
+        return (securityDirectoryFlag & 0x80) != 0;
+    }
+
+    public boolean isWhenIssuedSecurity() {
+        return (securityDirectoryFlag & 0x40) != 0;
+    }
+
+    public boolean isETP() {
+        return (securityDirectoryFlag & 0x20) != 0;
     }
 
     public long getTimestamp() {
@@ -61,7 +68,7 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     }
 
     public static IEXSecurityDirectoryMessage createIEXMessage(final byte[] bytes) {
-        final IEXSecurityDirectoryFlag iexSecurityDirectoryFlag = IEXSecurityDirectoryFlag.getSecurityDirectoryFlag(bytes[1]);
+        final byte iexSecurityDirectoryFlag = bytes[1];
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final int roundLotSize = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));

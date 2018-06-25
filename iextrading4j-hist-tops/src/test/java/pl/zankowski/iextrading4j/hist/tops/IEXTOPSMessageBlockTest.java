@@ -3,7 +3,7 @@ package pl.zankowski.iextrading4j.hist.tops;
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.api.message.builder.IEXMessageHeaderDataBuilder;
-import pl.zankowski.iextrading4j.hist.api.message.builder.IEXTradeMessageDataBuilder;
+import pl.zankowski.iextrading4j.hist.api.message.trading.builder.IEXTradeMessageDataBuilder;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 import pl.zankowski.iextrading4j.hist.tops.message.builder.IEXQuoteUpdateMessageDataBuilder;
 
@@ -33,7 +33,7 @@ public class IEXTOPSMessageBlockTest {
                                    IEXQuoteUpdateMessageDataBuilder iexQuoteUpdateMessageDataBuilder) {
         ByteBuffer byteBuffer = ByteBuffer.allocate(128);
         byteBuffer.put(iexMessageHeaderDataBuilder.getBytes());
-        byteBuffer.put(IEXByteTestUtil.convert((short) 42));
+        byteBuffer.put(IEXByteTestUtil.convert((short) 38));
         byteBuffer.put(iexTradeMessageDataBuilder.getBytes());
         byteBuffer.put(IEXByteTestUtil.convert((short) 42));
         byteBuffer.put(iexQuoteUpdateMessageDataBuilder.getBytes());

@@ -5,7 +5,6 @@ import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
-import pl.zankowski.iextrading4j.hist.tops.trading.field.IEXMessageFlag;
 
 import java.io.IOException;
 
@@ -21,7 +20,6 @@ public class IEXQuoteUpdateMessageTest extends ExtendedUnitTestBase {
         final IEXQuoteUpdateMessage message = createIEXMessage(packet);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.QUOTE_UPDATE);
-        assertThat(message.getMessageFlag()).isEqualTo(IEXMessageFlag.ACTIVE_OUT_SESSION);
         assertThat(message.getTimestamp()).isEqualTo(1509795046074879944L);
         assertThat(message.getSymbol()).isEqualTo("A");
         assertThat(message.getBidSize()).isEqualTo(0);
