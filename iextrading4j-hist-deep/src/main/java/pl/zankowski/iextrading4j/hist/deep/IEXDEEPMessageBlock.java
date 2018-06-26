@@ -30,13 +30,13 @@ public class IEXDEEPMessageBlock extends IEXSegment {
 
     public static IEXDEEPMessageBlock createIEXSegment(final byte[] packet) {
         final List<IEXMessage> iexMessages = new ArrayList<>();
-        int offset = 40;
+        int offset = IEXMessageHeader.LENGTH;
 
         final IEXMessageHeader iexMessageHeader = IEXMessageHeader.createIEXMessageHeader(Arrays.copyOfRange(packet, 0, offset));
 
         for (int i = 0; i < iexMessageHeader.getMessageCount(); i++) {
-            short length = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(packet, offset, offset = offset + 2));
-            iexMessages.add(resolveMessage(Arrays.copyOfRange(packet, offset, offset = offset + length)));
+            final short messageLength = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(packet, offset, offset = offset + 2));
+            iexMessages.add(resolveMessage(Arrays.copyOfRange(packet, offset, offset = offset + messageLength)));
         }
 
         return new IEXDEEPMessageBlock(iexMessageHeader, iexMessages);
