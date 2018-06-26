@@ -21,10 +21,30 @@ public class IEXTradingStatusMessageDataBuilder implements TestDataBuilder {
         return new IEXTradingStatusMessageDataBuilder();
     }
 
+    public IEXTradingStatusMessageDataBuilder withTradingStatus(final IEXTradingStatus tradingStatus) {
+        this.tradingStatus = tradingStatus;
+        return this;
+    }
+
+    public IEXTradingStatusMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXTradingStatusMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXTradingStatusMessageDataBuilder withReason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(22, IEXMessageType.TRADING_STATUS, tradingStatus,
-                timestamp, symbol, IEXByteTestUtil.convert(reason, 4));
+        return IEXByteTestUtil.prepareBytes(IEXTradingStatusMessage.LENGTH, IEXMessageType.TRADING_STATUS,
+                tradingStatus, timestamp, symbol, IEXByteTestUtil.convert(reason, 4));
     }
 
     public IEXTradingStatusMessage build() {

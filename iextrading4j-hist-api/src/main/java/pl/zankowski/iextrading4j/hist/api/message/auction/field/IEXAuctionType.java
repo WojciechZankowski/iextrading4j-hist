@@ -1,7 +1,6 @@
 package pl.zankowski.iextrading4j.hist.api.message.auction.field;
 
 import pl.zankowski.iextrading4j.hist.api.IEXByteEnum;
-import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXDetail;
 
 import java.util.EnumSet;
 import java.util.HashMap;

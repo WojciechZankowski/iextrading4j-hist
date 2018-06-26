@@ -22,10 +22,30 @@ public class IEXOfficialPriceMessageDataBuilder implements TestDataBuilder {
         return new IEXOfficialPriceMessageDataBuilder();
     }
 
+    public IEXOfficialPriceMessageDataBuilder withPriceType(final IEXPriceType priceType) {
+        this.priceType = priceType;
+        return this;
+    }
+
+    public IEXOfficialPriceMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXOfficialPriceMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXOfficialPriceMessageDataBuilder withOfficialPrice(final IEXPrice officialPrice) {
+        this.officialPrice = officialPrice;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(26, IEXMessageType.OFFICIAL_PRICE_MESSAGE, priceType, timestamp,
-                symbol, officialPrice);
+        return IEXByteTestUtil.prepareBytes(IEXOfficialPriceMessage.LENGTH, IEXMessageType.OFFICIAL_PRICE_MESSAGE,
+                priceType, timestamp, symbol, officialPrice);
     }
 
     public IEXOfficialPriceMessage build() {

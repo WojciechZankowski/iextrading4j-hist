@@ -8,33 +8,33 @@ import java.nio.ByteOrder;
 
 public class IEXByteTestUtil {
 
-    public static byte[] convert(final long value) {
-        ByteBuffer buffer = ByteBuffer.allocate(8);
+    static byte[] convert(final long value) {
+        final ByteBuffer buffer = ByteBuffer.allocate(8);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.putLong(value);
         return buffer.array();
     }
 
     public static byte[] convert(final short value) {
-        ByteBuffer buffer = ByteBuffer.allocate(2);
+        final ByteBuffer buffer = ByteBuffer.allocate(2);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.putShort(value);
         return buffer.array();
     }
 
-    public static byte[] convert(final int value) {
-        ByteBuffer buffer = ByteBuffer.allocate(4);
+    static byte[] convert(final int value) {
+        final ByteBuffer buffer = ByteBuffer.allocate(4);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.putInt(value);
         return buffer.array();
     }
 
-    public static byte[] convert(final String value) {
+    static byte[] convert(final String value) {
         return convert(value, 8);
     }
 
     public static byte[] convert(final String value, final int capacity) {
-        ByteBuffer buffer = ByteBuffer.allocate(capacity);
+        final ByteBuffer buffer = ByteBuffer.allocate(capacity);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.put(value.getBytes());
         return buffer.array();

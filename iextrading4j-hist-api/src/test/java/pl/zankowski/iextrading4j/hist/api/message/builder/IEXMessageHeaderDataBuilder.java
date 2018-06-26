@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.builder;
 
-import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
@@ -21,23 +20,65 @@ public class IEXMessageHeaderDataBuilder implements TestDataBuilder {
         return messageHeader().build();
     }
 
-    public static byte[] messageHeaderBytes() {
-        return messageHeader().getBytes();
-    }
-
     public static IEXMessageHeaderDataBuilder messageHeader() {
         return new IEXMessageHeaderDataBuilder();
     }
 
-    public IEXMessageHeaderDataBuilder withMessageCount(short messageCount) {
+    public IEXMessageHeaderDataBuilder withMessageCount(final short messageCount) {
         this.messageCount = messageCount;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withVersion(final byte version) {
+        this.version = version;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withReserved(final byte reserved) {
+        this.reserved = reserved;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withMessageProtocolID(final short messageProtocolID) {
+        this.messageProtocolID = messageProtocolID;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withChannelID(final int channelID) {
+        this.channelID = channelID;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withSessionID(final int sessionID) {
+        this.sessionID = sessionID;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withPayloadLength(final short payloadLength) {
+        this.payloadLength = payloadLength;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withStreamOffset(final long streamOffset) {
+        this.streamOffset = streamOffset;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withFirstMessageSequenceNumber(final long firstMessageSequenceNumber) {
+        this.firstMessageSequenceNumber = firstMessageSequenceNumber;
+        return this;
+    }
+
+    public IEXMessageHeaderDataBuilder withSendTime(final long sendTime) {
+        this.sendTime = sendTime;
         return this;
     }
 
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(40, version, reserved, messageProtocolID, channelID, sessionID,
-                payloadLength, messageCount, streamOffset, firstMessageSequenceNumber, sendTime);
+        return IEXByteTestUtil.prepareBytes(IEXMessageHeader.LENGTH, version, reserved, messageProtocolID,
+                channelID, sessionID, payloadLength, messageCount, streamOffset, firstMessageSequenceNumber,
+                sendTime);
     }
 
     public IEXMessageHeader build() {

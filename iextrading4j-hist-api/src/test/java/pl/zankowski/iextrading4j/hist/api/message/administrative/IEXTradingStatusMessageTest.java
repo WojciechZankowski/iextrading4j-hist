@@ -19,8 +19,9 @@ public class IEXTradingStatusMessageTest {
         final String symbol = "SNAP";
         final String reason = "O";
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(22, IEXMessageType.TRADING_STATUS, tradingStatus,
-                timestamp, symbol, IEXByteTestUtil.convert(reason, 4));
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXTradingStatusMessage.LENGTH,
+                IEXMessageType.TRADING_STATUS, tradingStatus, timestamp, symbol,
+                IEXByteTestUtil.convert(reason, 4));
         final IEXTradingStatusMessage message = IEXTradingStatusMessage.createIEXMessage(bytes);
 
         assertThat(message.getTradingStatus()).isEqualTo(tradingStatus);

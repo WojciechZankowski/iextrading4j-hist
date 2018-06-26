@@ -25,7 +25,7 @@ public class IEXTradeMessageTest {
         final IEXPrice price = new IEXPrice(1234L);
         final long tradeID = 12345L;
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(38, messageType, saleConditionFlag,
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXTradeMessage.LENGTH, messageType, saleConditionFlag,
                 timestamp, symbol, size, price, tradeID);
         final IEXTradeMessage message = IEXTradeMessage.createIEXMessage(messageType, bytes);
 

@@ -1,5 +1,6 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXLULDTier;
@@ -12,7 +13,9 @@ import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SECURITY_DIRECTO
 
 public class IEXSecurityDirectoryMessage extends IEXMessage {
 
-    private final byte securityDirectoryFlag;
+    public static final int LENGTH = 31;
+
+    private final byte flag;
     private final long timestamp;
     private final String symbol;
     private final int roundLotSize;
@@ -20,14 +23,14 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     private final IEXLULDTier luldTier;
 
     private IEXSecurityDirectoryMessage(
-            final byte securityDirectoryFlag,
+            final byte flag,
             final long timestamp,
             final String symbol,
             final int roundLotSize,
             final IEXPrice adjustedPOCPrice,
             final IEXLULDTier luldTier) {
         super(SECURITY_DIRECTORY);
-        this.securityDirectoryFlag = securityDirectoryFlag;
+        this.flag = flag;
         this.timestamp = timestamp;
         this.symbol = symbol;
         this.roundLotSize = roundLotSize;
@@ -36,15 +39,15 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     }
 
     public boolean isTestSecurity() {
-        return (securityDirectoryFlag & 0x80) != 0;
+        return (flag & 0x80) != 0;
     }
 
     public boolean isWhenIssuedSecurity() {
-        return (securityDirectoryFlag & 0x40) != 0;
+        return (flag & 0x40) != 0;
     }
 
     public boolean isETP() {
-        return (securityDirectoryFlag & 0x20) != 0;
+        return (flag & 0x20) != 0;
     }
 
     public long getTimestamp() {
@@ -68,6 +71,10 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
     }
 
     public static IEXSecurityDirectoryMessage createIEXMessage(final byte[] bytes) {
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException(IEXSecurityDirectoryMessage.class, LENGTH);
+        }
+
         final byte iexSecurityDirectoryFlag = bytes[1];
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
@@ -87,7 +94,7 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
         final IEXSecurityDirectoryMessage that = (IEXSecurityDirectoryMessage) o;
         return timestamp == that.timestamp &&
                 roundLotSize == that.roundLotSize &&
-                securityDirectoryFlag == that.securityDirectoryFlag &&
+                flag == that.flag &&
                 Objects.equals(symbol, that.symbol) &&
                 Objects.equals(adjustedPOCPrice, that.adjustedPOCPrice) &&
                 luldTier == that.luldTier;
@@ -95,13 +102,13 @@ public class IEXSecurityDirectoryMessage extends IEXMessage {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), securityDirectoryFlag, timestamp, symbol, roundLotSize, adjustedPOCPrice, luldTier);
+        return Objects.hash(super.hashCode(), flag, timestamp, symbol, roundLotSize, adjustedPOCPrice, luldTier);
     }
 
     @Override
     public String toString() {
         return "IEXSecurityDirectoryMessage{" +
-                "securityDirectoryFlag=" + securityDirectoryFlag +
+                "flag=" + flag +
                 ", timestamp=" + timestamp +
                 ", symbol='" + symbol + '\'' +
                 ", roundLotSize=" + roundLotSize +

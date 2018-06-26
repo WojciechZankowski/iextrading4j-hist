@@ -13,10 +13,10 @@ public class IEXSegmentTest {
 
     @Test
     public void shouldSuccessfullyCreateSegmentInstance() {
-        IEXMessageHeader iexMessageHeader = defaultMessageHeader();
-        List<IEXMessage> iexMessageList = asList(defaultTradeMessage(), defaultTradeMessage());
+        final IEXMessageHeader iexMessageHeader = defaultMessageHeader();
+        final List<IEXMessage> iexMessageList = asList(defaultTradeMessage(), defaultTradeMessage());
 
-        IEXSegment iexSegment = new TestIEXSegment(iexMessageHeader, iexMessageList);
+        final IEXSegment iexSegment = new TestIEXSegment(iexMessageHeader, iexMessageList);
 
         assertThat(iexSegment.getMessageHeader()).isEqualTo(iexMessageHeader);
         assertThat(iexSegment.getMessages()).isEqualTo(iexMessageList);
@@ -24,11 +24,11 @@ public class IEXSegmentTest {
 
     @Test
     public void shouldTwoInstancesWithSameValuesBeEqual() {
-        IEXMessageHeader iexMessageHeader = defaultMessageHeader();
-        List<IEXMessage> iexMessageList = asList(defaultTradeMessage(), defaultTradeMessage());
+        final IEXMessageHeader iexMessageHeader = defaultMessageHeader();
+        final List<IEXMessage> iexMessageList = asList(defaultTradeMessage(), defaultTradeMessage());
 
-        IEXSegment iexSegment_1 = new TestIEXSegment(iexMessageHeader, iexMessageList);
-        IEXSegment iexSegment_2 = new TestIEXSegment(iexMessageHeader, iexMessageList);
+        final IEXSegment iexSegment_1 = new TestIEXSegment(iexMessageHeader, iexMessageList);
+        final IEXSegment iexSegment_2 = new TestIEXSegment(iexMessageHeader, iexMessageList);
 
         assertThat(iexSegment_1).isEqualTo(iexSegment_2);
         assertThat(iexSegment_1.hashCode()).isEqualTo(iexSegment_2.hashCode());

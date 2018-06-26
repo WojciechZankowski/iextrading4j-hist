@@ -20,8 +20,8 @@ public class IEXShortSalePriceTestStatusMessageTest {
         final String symbol = "SNAP";
         final IEXDetail detail = IEXDetail.PRICE_TEST_RESTRICTION_DEACTIVATED;
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(19, IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS,
-                shortSalePriceTestStatus, timestamp, symbol, detail);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXShortSalePriceTestStatusMessage.LENGTH,
+                IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS, shortSalePriceTestStatus, timestamp, symbol, detail);
         final IEXShortSalePriceTestStatusMessage message = IEXShortSalePriceTestStatusMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS);
