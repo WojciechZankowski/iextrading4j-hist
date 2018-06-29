@@ -18,8 +18,8 @@ public class IEXOperationalHaltStatusMessageTest {
         final long timestamp = 1494855059287436131L;
         final String symbol = "SNAP";
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(18, IEXMessageType.OPERATIONAL_HALT_STATUS,
-                haltStatus, timestamp, symbol);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXOperationalHaltStatusMessage.LENGTH,
+                IEXMessageType.OPERATIONAL_HALT_STATUS, haltStatus, timestamp, symbol);
         final IEXOperationalHaltStatusMessage message = IEXOperationalHaltStatusMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.OPERATIONAL_HALT_STATUS);

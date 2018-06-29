@@ -20,8 +20,8 @@ public class IEXOfficialPriceMessageTest {
         final String symbol = "SNAP";
         final IEXPrice officialPrice = new IEXPrice(1234L);
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(26, IEXMessageType.OFFICIAL_PRICE_MESSAGE, priceType, timestamp,
-                symbol, officialPrice);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXOfficialPriceMessage.LENGTH,
+                IEXMessageType.OFFICIAL_PRICE_MESSAGE, priceType, timestamp, symbol, officialPrice);
         final IEXOfficialPriceMessage message = IEXOfficialPriceMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.OFFICIAL_PRICE_MESSAGE);

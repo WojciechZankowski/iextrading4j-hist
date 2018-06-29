@@ -18,8 +18,8 @@ public class IEXSecurityEventMessageTest {
         final long timestamp = 1494855059287436131L;
         final String symbol = "SNAP";
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(18, IEXMessageType.SECURITY_EVENT, securityEvent,
-                timestamp, symbol);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXSecurityEventMessage.LENGTH,
+                IEXMessageType.SECURITY_EVENT, securityEvent, timestamp, symbol);
         final IEXSecurityEventMessage message = IEXSecurityEventMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_EVENT);

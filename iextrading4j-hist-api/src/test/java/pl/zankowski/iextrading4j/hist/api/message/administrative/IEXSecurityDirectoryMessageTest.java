@@ -25,8 +25,9 @@ public class IEXSecurityDirectoryMessageTest {
         final IEXPrice adjustedPOCPrice = new IEXPrice(1234L);
         final IEXLULDTier luldTier = IEXLULDTier.TIER_1_NMS;
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(31, IEXMessageType.SECURITY_DIRECTORY,
-                securityDirectoryFlag, timestamp, symbol, roundLotSize, adjustedPOCPrice, luldTier);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXSecurityDirectoryMessage.LENGTH,
+                IEXMessageType.SECURITY_DIRECTORY, securityDirectoryFlag, timestamp, symbol, roundLotSize,
+                adjustedPOCPrice, luldTier);
         final IEXSecurityDirectoryMessage message = IEXSecurityDirectoryMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_DIRECTORY);

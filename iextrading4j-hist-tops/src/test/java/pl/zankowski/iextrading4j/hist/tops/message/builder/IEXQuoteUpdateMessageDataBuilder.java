@@ -20,10 +20,6 @@ public class IEXQuoteUpdateMessageDataBuilder {
         return quoteMessage().build();
     }
 
-    public static byte[] quoteMessageBytes() {
-        return quoteMessage().getBytes();
-    }
-
     public static IEXQuoteUpdateMessageDataBuilder quoteMessage() {
         return new IEXQuoteUpdateMessageDataBuilder();
     }
@@ -33,8 +29,48 @@ public class IEXQuoteUpdateMessageDataBuilder {
         return this;
     }
 
+    public IEXQuoteUpdateMessageDataBuilder withMessageType(final IEXMessageType messageType) {
+        this.messageType = messageType;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withMessageFlag(final byte messageFlag) {
+        this.messageFlag = messageFlag;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withBidSize(final int bidSize) {
+        this.bidSize = bidSize;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withBidPrice(final IEXPrice bidPrice) {
+        this.bidPrice = bidPrice;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withAskPrice(final IEXPrice askPrice) {
+        this.askPrice = askPrice;
+        return this;
+    }
+
+    public IEXQuoteUpdateMessageDataBuilder withAskSize(final int askSize) {
+        this.askSize = askSize;
+        return this;
+    }
+
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(42, messageType.getCode(), messageFlag,
+        return IEXByteTestUtil.prepareBytes(IEXQuoteUpdateMessage.LENGTH, messageType.getCode(), messageFlag,
                 timestamp, symbol, bidSize, bidPrice.getNumber(), askPrice.getNumber(), askSize);
     }
 

@@ -9,7 +9,7 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
 public class IEXSecurityDirectoryMessageDataBuilder implements TestDataBuilder {
 
-    private byte securityDirectoryFlag = (byte) -112;
+    private byte flag = (byte) -112;
     private long timestamp = 1494855059287436131L;
     private String symbol = "SNAP";
     private int roundLotSize = 10;
@@ -25,14 +25,39 @@ public class IEXSecurityDirectoryMessageDataBuilder implements TestDataBuilder {
     }
 
     public IEXSecurityDirectoryMessageDataBuilder withFlag(final byte flag) {
-        this.securityDirectoryFlag = flag;
+        this.flag = flag;
+        return this;
+    }
+
+    public IEXSecurityDirectoryMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXSecurityDirectoryMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXSecurityDirectoryMessageDataBuilder withRoundLotSize(final int roundLotSize) {
+        this.roundLotSize = roundLotSize;
+        return this;
+    }
+
+    public IEXSecurityDirectoryMessageDataBuilder withAdjustedPOCPrice(final IEXPrice adjustedPOCPrice) {
+        this.adjustedPOCPrice = adjustedPOCPrice;
+        return this;
+    }
+
+    public IEXSecurityDirectoryMessageDataBuilder withLuldTier(final IEXLULDTier luldTier) {
+        this.luldTier = luldTier;
         return this;
     }
 
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(31, IEXMessageType.SECURITY_DIRECTORY, securityDirectoryFlag,
-                timestamp, symbol, roundLotSize, adjustedPOCPrice, luldTier);
+        return IEXByteTestUtil.prepareBytes(IEXSecurityDirectoryMessage.LENGTH, IEXMessageType.SECURITY_DIRECTORY,
+                flag, timestamp, symbol, roundLotSize, adjustedPOCPrice, luldTier);
     }
 
     public IEXSecurityDirectoryMessage build() {

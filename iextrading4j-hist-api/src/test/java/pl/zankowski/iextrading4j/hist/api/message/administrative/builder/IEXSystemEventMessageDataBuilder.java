@@ -19,9 +19,20 @@ public class IEXSystemEventMessageDataBuilder implements TestDataBuilder {
         return new IEXSystemEventMessageDataBuilder();
     }
 
+    public IEXSystemEventMessageDataBuilder withSystemEvent(final IEXSystemEvent systemEvent) {
+        this.systemEvent = systemEvent;
+        return this;
+    }
+
+    public IEXSystemEventMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(10, IEXMessageType.SYSTEM_EVENT, systemEvent, timestamp);
+        return IEXByteTestUtil.prepareBytes(IEXSystemEventMessage.LENGTH, IEXMessageType.SYSTEM_EVENT, systemEvent,
+                timestamp);
     }
 
     public IEXSystemEventMessage build() {

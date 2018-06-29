@@ -10,7 +10,7 @@ public class IEXPriceTest {
     @Test
     public void shouldSuccessfullyCreateInstanceThroughConstructor() {
         final long number = 12345678L;
-        IEXPrice iexPrice = new IEXPrice(number);
+        final IEXPrice iexPrice = new IEXPrice(number);
 
         assertThat(iexPrice.getNumber()).isEqualTo(number);
     }
@@ -18,7 +18,7 @@ public class IEXPriceTest {
     @Test
     public void shouldProperlyFormatPrice() {
         final long number = 1234567;
-        IEXPrice iexPrice = new IEXPrice(number);
+        final IEXPrice iexPrice = new IEXPrice(number);
 
         assertThat(iexPrice.toString()).isEqualTo("123.4567");
     }
@@ -26,8 +26,8 @@ public class IEXPriceTest {
     @Test
     public void twoObjectsShouldBeEqualWithTheSameNumberInside() {
         final long number = 43215678L;
-        IEXPrice iexPrice_1 = new IEXPrice(number);
-        IEXPrice iexPrice_2 = new IEXPrice(number);
+        final IEXPrice iexPrice_1 = new IEXPrice(number);
+        final IEXPrice iexPrice_2 = new IEXPrice(number);
 
         assertThat(iexPrice_1).isEqualTo(iexPrice_2);
         assertThat(iexPrice_1.hashCode()).isEqualTo(iexPrice_2.hashCode());
@@ -38,8 +38,8 @@ public class IEXPriceTest {
         final long biggerNumber = 12345678L;
         final long smallerNumber = 1234567L;
 
-        IEXPrice iexPrice_1 = new IEXPrice(biggerNumber);
-        IEXPrice iexPrice_2 = new IEXPrice(smallerNumber);
+        final IEXPrice iexPrice_1 = new IEXPrice(biggerNumber);
+        final IEXPrice iexPrice_2 = new IEXPrice(smallerNumber);
 
         assertThat(iexPrice_1.compareTo(iexPrice_2)).isEqualTo(1);
     }
@@ -49,8 +49,8 @@ public class IEXPriceTest {
         final long biggerNumber = 12345678L;
         final long smallerNumber = 1234567L;
 
-        IEXPrice iexPrice_1 = new IEXPrice(smallerNumber);
-        IEXPrice iexPrice_2 = new IEXPrice(biggerNumber);
+        final IEXPrice iexPrice_1 = new IEXPrice(smallerNumber);
+        final IEXPrice iexPrice_2 = new IEXPrice(biggerNumber);
 
         assertThat(iexPrice_1.compareTo(iexPrice_2)).isEqualTo(-1);
     }
@@ -59,8 +59,8 @@ public class IEXPriceTest {
     public void compareShouldReturnZeroForEqualsNumbers() {
         final long number = 12345L;
 
-        IEXPrice iexPrice_1 = new IEXPrice(number);
-        IEXPrice iexPrice_2 = new IEXPrice(number);
+        final IEXPrice iexPrice_1 = new IEXPrice(number);
+        final IEXPrice iexPrice_2 = new IEXPrice(number);
 
         assertThat(iexPrice_1.compareTo(iexPrice_2)).isEqualTo(0);
     }

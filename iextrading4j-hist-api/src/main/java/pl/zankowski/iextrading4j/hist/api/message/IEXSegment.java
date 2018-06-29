@@ -13,7 +13,7 @@ public abstract class IEXSegment {
             final IEXMessageHeader messageHeader,
             final List<IEXMessage> messages) {
         this.messageHeader = messageHeader;
-        this.messages = messages;
+        this.messages = new ArrayList<>(messages);
     }
 
     public IEXMessageHeader getMessageHeader() {

@@ -11,7 +11,7 @@ public class IEXTradeMessageDataBuilder implements TestDataBuilder {
     private IEXMessageType messageType = IEXMessageType.TRADE_REPORT;
     private byte saleConditionFlag = (byte) -112;
     private long timestamp = 1494855059287436131L;
-    private String symbol = "SNAP    ";
+    private String symbol = "SNAP";
     private int size = 3;
     private IEXPrice price = new IEXPrice(1234L);
     private long tradeID = 12345L;
@@ -29,9 +29,44 @@ public class IEXTradeMessageDataBuilder implements TestDataBuilder {
         return this;
     }
 
+    public IEXTradeMessageDataBuilder withMessageType(final IEXMessageType messageType) {
+        this.messageType = messageType;
+        return this;
+    }
+
+    public IEXTradeMessageDataBuilder withSaleConditionFlag(final byte saleConditionFlag) {
+        this.saleConditionFlag = saleConditionFlag;
+        return this;
+    }
+
+    public IEXTradeMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXTradeMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXTradeMessageDataBuilder withSize(final int size) {
+        this.size = size;
+        return this;
+    }
+
+    public IEXTradeMessageDataBuilder withPrice(final IEXPrice price) {
+        this.price = price;
+        return this;
+    }
+
+    public IEXTradeMessageDataBuilder withTradeID(final long tradeID) {
+        this.tradeID = tradeID;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(38, messageType, saleConditionFlag, timestamp, symbol,
+        return IEXByteTestUtil.prepareBytes(IEXTradeMessage.LENGTH, messageType, saleConditionFlag, timestamp, symbol,
                 size, price, tradeID);
     }
 

@@ -27,8 +27,8 @@ public class IEXQuoteUpdateMessageTest {
         final IEXPrice askPrice = new IEXPrice(1234567L);
         final int askSize = 200;
 
-        final byte[] data = IEXByteTestUtil.prepareBytes(42, messageType.getCode(), messageFlag,
-                timestamp, symbol, bidSize, bidPrice.getNumber(), askPrice.getNumber(), askSize);
+        final byte[] data = IEXByteTestUtil.prepareBytes(IEXQuoteUpdateMessage.LENGTH, messageType.getCode(),
+                messageFlag, timestamp, symbol, bidSize, bidPrice.getNumber(), askPrice.getNumber(), askSize);
         final IEXQuoteUpdateMessage iexQuoteUpdateMessage = IEXQuoteUpdateMessage.createIEXMessage(data);
 
         assertThat(iexQuoteUpdateMessage.getMessageType()).isEqualTo(messageType);

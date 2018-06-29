@@ -1,5 +1,6 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXOperationalHaltStatus;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
@@ -10,6 +11,8 @@ import java.util.Objects;
 import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.OPERATIONAL_HALT_STATUS;
 
 public class IEXOperationalHaltStatusMessage extends IEXMessage {
+
+    public static final int LENGTH = 18;
 
     private final IEXOperationalHaltStatus operationalHaltStatus;
     private final long timestamp;
@@ -26,6 +29,10 @@ public class IEXOperationalHaltStatusMessage extends IEXMessage {
     }
 
     public static IEXOperationalHaltStatusMessage createIEXMessage(final byte[] bytes) {
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException(IEXOperationalHaltStatusMessage.class, LENGTH);
+        }
+
         final IEXOperationalHaltStatus operationalHaltStatus = IEXOperationalHaltStatus.getOperationalHaltStatus(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

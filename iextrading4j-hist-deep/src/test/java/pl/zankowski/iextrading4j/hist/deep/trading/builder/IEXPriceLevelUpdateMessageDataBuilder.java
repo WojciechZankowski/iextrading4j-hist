@@ -24,10 +24,40 @@ public class IEXPriceLevelUpdateMessageDataBuilder implements TestDataBuilder {
         return new IEXPriceLevelUpdateMessageDataBuilder();
     }
 
+    public IEXPriceLevelUpdateMessageDataBuilder withMessageType(final IEXMessageType messageType) {
+        this.messageType = messageType;
+        return this;
+    }
+
+    public IEXPriceLevelUpdateMessageDataBuilder withEventFlag(final IEXEventFlag eventFlag) {
+        this.eventFlag = eventFlag;
+        return this;
+    }
+
+    public IEXPriceLevelUpdateMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXPriceLevelUpdateMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXPriceLevelUpdateMessageDataBuilder withSize(final int size) {
+        this.size = size;
+        return this;
+    }
+
+    public IEXPriceLevelUpdateMessageDataBuilder withPrice(final IEXPrice price) {
+        this.price = price;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(30, messageType, eventFlag, timestamp, symbol,
-                size, price);
+        return IEXByteTestUtil.prepareBytes(IEXPriceLevelUpdateMessage.LENGTH, messageType, eventFlag, timestamp,
+                symbol, size, price);
     }
 
     public IEXPriceLevelUpdateMessage build() {

@@ -1,5 +1,6 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXDetail;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXShortSalePriceTestStatus;
@@ -11,6 +12,8 @@ import java.util.Objects;
 import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS;
 
 public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
+
+    public static final int LENGTH = 19;
 
     private final IEXShortSalePriceTestStatus shortSalePriceTestStatus;
     private final long timestamp;
@@ -30,6 +33,10 @@ public class IEXShortSalePriceTestStatusMessage extends IEXMessage {
     }
 
     public static IEXShortSalePriceTestStatusMessage createIEXMessage(final byte[] bytes) {
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException(IEXShortSalePriceTestStatusMessage.class, LENGTH);
+        }
+
         final IEXShortSalePriceTestStatus shortSalePriceTestStatus = IEXShortSalePriceTestStatus.getShortSalePriceTestStatus(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

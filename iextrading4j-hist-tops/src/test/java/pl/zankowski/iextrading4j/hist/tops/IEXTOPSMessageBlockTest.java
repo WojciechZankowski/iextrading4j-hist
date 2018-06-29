@@ -3,9 +3,11 @@ package pl.zankowski.iextrading4j.hist.tops;
 import org.junit.Test;
 import pl.zankowski.iextrading4j.hist.api.message.IEXSegment;
 import pl.zankowski.iextrading4j.hist.api.message.builder.IEXMessageHeaderDataBuilder;
+import pl.zankowski.iextrading4j.hist.api.message.trading.IEXTradeMessage;
 import pl.zankowski.iextrading4j.hist.api.message.trading.builder.IEXTradeMessageDataBuilder;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 import pl.zankowski.iextrading4j.hist.tops.message.builder.IEXQuoteUpdateMessageDataBuilder;
+import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
 
 import java.nio.ByteBuffer;
 
@@ -15,27 +17,27 @@ public class IEXTOPSMessageBlockTest {
 
     @Test
     public void shouldSuccessfullyCreateMessageBlockInstance() {
-        IEXMessageHeaderDataBuilder iexMessageHeaderDataBuilder = IEXMessageHeaderDataBuilder.messageHeader()
+        final IEXMessageHeaderDataBuilder messageHeaderBuilder = IEXMessageHeaderDataBuilder.messageHeader()
                 .withMessageCount((short) 2);
-        IEXTradeMessageDataBuilder iexTradeMessageDataBuilder = IEXTradeMessageDataBuilder.tradeMessage();
-        IEXQuoteUpdateMessageDataBuilder iexQuoteUpdateMessageDataBuilder = IEXQuoteUpdateMessageDataBuilder.quoteMessage();
+        final IEXTradeMessageDataBuilder tradeMessageBuilder = IEXTradeMessageDataBuilder.tradeMessage();
+        final IEXQuoteUpdateMessageDataBuilder quoteUpdateMessageBuilder = IEXQuoteUpdateMessageDataBuilder.quoteMessage();
 
-        byte[] bytes = prepareMessages(iexMessageHeaderDataBuilder, iexTradeMessageDataBuilder, iexQuoteUpdateMessageDataBuilder);
-        IEXSegment iexSegment = IEXTOPSMessageBlock.createIEXSegment(bytes);
+        final byte[] bytes = prepareMessages(messageHeaderBuilder, tradeMessageBuilder, quoteUpdateMessageBuilder);
+        final IEXSegment segment = IEXTOPSMessageBlock.createIEXSegment(bytes);
 
-        assertThat(iexSegment.getMessages()).hasSize(2);
-        assertThat(iexSegment.getMessageHeader()).isEqualTo(iexMessageHeaderDataBuilder.build());
-        assertThat(iexSegment.getMessages().get(0)).isEqualTo(iexTradeMessageDataBuilder.build());
-        assertThat(iexSegment.getMessages().get(1)).isEqualTo(iexQuoteUpdateMessageDataBuilder.build());
+        assertThat(segment.getMessages()).hasSize(2);
+        assertThat(segment.getMessageHeader()).isEqualTo(messageHeaderBuilder.build());
+        assertThat(segment.getMessages().get(0)).isEqualTo(tradeMessageBuilder.build());
+        assertThat(segment.getMessages().get(1)).isEqualTo(quoteUpdateMessageBuilder.build());
     }
 
     private byte[] prepareMessages(IEXMessageHeaderDataBuilder iexMessageHeaderDataBuilder, IEXTradeMessageDataBuilder iexTradeMessageDataBuilder,
                                    IEXQuoteUpdateMessageDataBuilder iexQuoteUpdateMessageDataBuilder) {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(128);
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(124);
         byteBuffer.put(iexMessageHeaderDataBuilder.getBytes());
-        byteBuffer.put(IEXByteTestUtil.convert((short) 38));
+        byteBuffer.put(IEXByteTestUtil.convert((short) IEXTradeMessage.LENGTH));
         byteBuffer.put(iexTradeMessageDataBuilder.getBytes());
-        byteBuffer.put(IEXByteTestUtil.convert((short) 42));
+        byteBuffer.put(IEXByteTestUtil.convert((short) IEXQuoteUpdateMessage.LENGTH));
         byteBuffer.put(iexQuoteUpdateMessageDataBuilder.getBytes());
         return byteBuffer.array();
     }

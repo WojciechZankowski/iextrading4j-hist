@@ -1,5 +1,6 @@
 package pl.zankowski.iextrading4j.hist.api.message.auction;
 
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.auction.field.IEXAuctionType;
@@ -12,6 +13,8 @@ import java.util.Objects;
 import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.AUCTION_INFORMATION;
 
 public class IEXAuctionInformationMessage extends IEXMessage {
+
+    public static final int LENGTH = 80;
 
     private final IEXAuctionType auctionType;
     private final long timestamp;
@@ -61,6 +64,10 @@ public class IEXAuctionInformationMessage extends IEXMessage {
     }
 
     public static IEXAuctionInformationMessage createIEXMessage(final byte[] bytes) {
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException(IEXAuctionInformationMessage.class, LENGTH);
+        }
+
         final IEXAuctionType auctionType = IEXAuctionType.getAuctionType(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
