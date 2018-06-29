@@ -17,7 +17,7 @@ public class IEXSystemEventMessageTest {
         final IEXSystemEvent systemEvent = IEXSystemEvent.MESSAGES_START;
         final long timestamp = 1494855059287436131L;
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(10, IEXMessageType.SYSTEM_EVENT,
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXSystemEventMessage.LENGTH, IEXMessageType.SYSTEM_EVENT,
                 systemEvent, timestamp);
         final IEXSystemEventMessage message = IEXSystemEventMessage.createIEXMessage(bytes);
 

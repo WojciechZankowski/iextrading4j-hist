@@ -22,8 +22,8 @@ public class IEXPriceLevelUpdateMessageTest {
         final int size = 12;
         final IEXPrice price = new IEXPrice(1234L);
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(30, messageType, eventFlag, timestamp, symbol,
-                size, price);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXPriceLevelUpdateMessage.LENGTH, messageType, eventFlag,
+                timestamp, symbol, size, price);
         final IEXPriceLevelUpdateMessage message = IEXPriceLevelUpdateMessage.createIEXMessage(messageType, bytes);
 
         assertThat(message.getMessageType()).isEqualTo(messageType);

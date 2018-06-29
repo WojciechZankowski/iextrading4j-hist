@@ -1,5 +1,6 @@
 package pl.zankowski.iextrading4j.hist.deep.administrative;
 
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 import pl.zankowski.iextrading4j.hist.deep.administrative.field.IEXSecurityEvent;
@@ -10,6 +11,8 @@ import java.util.Objects;
 import static pl.zankowski.iextrading4j.hist.api.IEXMessageType.SECURITY_EVENT;
 
 public class IEXSecurityEventMessage extends IEXMessage {
+
+    public static final int LENGTH = 18;
 
     private final IEXSecurityEvent securityEvent;
     private final long timestamp;
@@ -26,6 +29,10 @@ public class IEXSecurityEventMessage extends IEXMessage {
     }
 
     public static IEXSecurityEventMessage createIEXMessage(final byte[] bytes) {
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException(IEXSecurityEventMessage.class, LENGTH);
+        }
+
         final IEXSecurityEvent iexSecurityEvent = IEXSecurityEvent.getSecurityEvent(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

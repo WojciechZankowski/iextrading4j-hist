@@ -21,8 +21,8 @@ public class IEXMessageHeaderTest {
         final long firstMessageSequenceNumber = 115387;
         final long sendTime = 1494855059287436131L;
 
-        byte[] data = IEXByteTestUtil.prepareBytes(40, version, reserved, messageProtocolID, channelID, sessionID,
-                payloadLength, messageCount, streamOffset, firstMessageSequenceNumber, sendTime);
+        byte[] data = IEXByteTestUtil.prepareBytes(IEXMessageHeader.LENGTH, version, reserved, messageProtocolID,
+                channelID, sessionID, payloadLength, messageCount, streamOffset, firstMessageSequenceNumber, sendTime);
         IEXMessageHeader iexMessageHeader = IEXMessageHeader.createIEXMessageHeader(data);
 
         assertThat(iexMessageHeader.getVersion()).isEqualTo(version);

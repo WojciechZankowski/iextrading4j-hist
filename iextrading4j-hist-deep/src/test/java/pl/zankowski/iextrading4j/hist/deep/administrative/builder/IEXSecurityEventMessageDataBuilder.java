@@ -20,10 +20,25 @@ public class IEXSecurityEventMessageDataBuilder implements TestDataBuilder {
         return new IEXSecurityEventMessageDataBuilder();
     }
 
+    public IEXSecurityEventMessageDataBuilder withSecurityEvent(final IEXSecurityEvent securityEvent) {
+        this.securityEvent = securityEvent;
+        return this;
+    }
+
+    public IEXSecurityEventMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXSecurityEventMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(18, IEXMessageType.SECURITY_EVENT, securityEvent,
-                timestamp, symbol);
+        return IEXByteTestUtil.prepareBytes(IEXSecurityEventMessage.LENGTH, IEXMessageType.SECURITY_EVENT,
+                securityEvent, timestamp, symbol);
     }
 
     public IEXSecurityEventMessage build() {

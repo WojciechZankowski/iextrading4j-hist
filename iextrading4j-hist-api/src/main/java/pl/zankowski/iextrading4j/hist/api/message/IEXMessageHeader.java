@@ -1,11 +1,14 @@
 package pl.zankowski.iextrading4j.hist.api.message;
 
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class IEXMessageHeader {
+
+    public static final int LENGTH = 40;
 
     private final byte version;
     private final short messageProtocolID;
@@ -39,8 +42,8 @@ public class IEXMessageHeader {
     }
 
     public static IEXMessageHeader createIEXMessageHeader(final byte[] bytes) {
-        if (bytes.length != 40) {
-            throw new IllegalArgumentException("IEX TOPS Message Header has to has 40 bytes.");
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException("Failed to parse message. IEXMessageHeader requires 40 bytes.");
         }
 
         final byte version = bytes[0];

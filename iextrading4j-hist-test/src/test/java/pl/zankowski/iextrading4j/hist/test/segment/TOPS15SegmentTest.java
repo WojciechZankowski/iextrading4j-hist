@@ -8,7 +8,6 @@ import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
 import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 import pl.zankowski.iextrading4j.hist.tops.IEXTOPSMessageBlock;
 import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
-import pl.zankowski.iextrading4j.hist.tops.trading.field.IEXMessageFlag;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +35,6 @@ public class TOPS15SegmentTest extends ExtendedUnitTestBase {
         final List<IEXMessage> messages = segment.getMessages();
         final IEXQuoteUpdateMessage message = (IEXQuoteUpdateMessage) messages.get(0);
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.QUOTE_UPDATE);
-        assertThat(message.getMessageFlag()).isEqualTo(IEXMessageFlag.ACTIVE_OUT_SESSION);
         assertThat(message.getTimestamp()).isEqualTo(1509192000475229769L);
         assertThat(message.getSymbol()).isEqualTo("ZIEXT");
         assertThat(message.getBidSize()).isEqualTo(0);

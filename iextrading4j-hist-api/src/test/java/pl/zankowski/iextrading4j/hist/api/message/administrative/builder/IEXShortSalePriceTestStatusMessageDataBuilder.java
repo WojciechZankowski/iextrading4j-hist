@@ -22,10 +22,31 @@ public class IEXShortSalePriceTestStatusMessageDataBuilder implements TestDataBu
         return new IEXShortSalePriceTestStatusMessageDataBuilder();
     }
 
+    public IEXShortSalePriceTestStatusMessageDataBuilder withShortSalePriceTestStatus(
+            final IEXShortSalePriceTestStatus shortSalePriceTestStatus) {
+        this.shortSalePriceTestStatus = shortSalePriceTestStatus;
+        return this;
+    }
+
+    public IEXShortSalePriceTestStatusMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXShortSalePriceTestStatusMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public IEXShortSalePriceTestStatusMessageDataBuilder withDetail(final IEXDetail detail) {
+        this.detail = detail;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(19, IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS,
-                shortSalePriceTestStatus, timestamp, symbol, detail);
+        return IEXByteTestUtil.prepareBytes(IEXShortSalePriceTestStatusMessage.LENGTH,
+                IEXMessageType.SHORT_SALE_PRICE_TEST_STATUS, shortSalePriceTestStatus, timestamp, symbol, detail);
     }
 
     public IEXShortSalePriceTestStatusMessage build() {

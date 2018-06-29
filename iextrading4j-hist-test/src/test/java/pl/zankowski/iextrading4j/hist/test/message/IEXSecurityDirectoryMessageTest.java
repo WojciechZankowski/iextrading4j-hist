@@ -5,7 +5,6 @@ import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.IEXSecurityDirectoryMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXLULDTier;
-import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXSecurityDirectoryFlag;
 import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ public class IEXSecurityDirectoryMessageTest extends ExtendedUnitTestBase {
         final IEXSecurityDirectoryMessage message = createIEXMessage(packet);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_DIRECTORY);
-        assertThat(message.getSecurityDirectoryFlag()).isEqualTo(IEXSecurityDirectoryFlag.SYMBOL_IS_TEST);
         assertThat(message.getTimestamp()).isEqualTo(1509795046090464161L);
         assertThat(message.getSymbol()).isEqualTo("ZEXIT");
         assertThat(message.getRoundLotSize()).isEqualTo(100);

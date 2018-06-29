@@ -1,9 +1,9 @@
 package pl.zankowski.iextrading4j.hist.api.message.trading;
 
 import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
+import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
-import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXSaleConditionFlag;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
 
 import java.util.Arrays;
@@ -11,7 +11,9 @@ import java.util.Objects;
 
 public class IEXTradeMessage extends IEXMessage {
 
-    private final IEXSaleConditionFlag saleConditionFlag;
+    public static final int LENGTH = 38;
+
+    private final byte saleConditionFlag;
     private final long timestamp;
     private final String symbol;
     private final int size;
@@ -20,7 +22,7 @@ public class IEXTradeMessage extends IEXMessage {
 
     private IEXTradeMessage(
             final IEXMessageType messageType,
-            final IEXSaleConditionFlag saleConditionFlag,
+            final byte saleConditionFlag,
             final long timestamp,
             final String symbol,
             final int size,
@@ -36,7 +38,11 @@ public class IEXTradeMessage extends IEXMessage {
     }
 
     public static IEXTradeMessage createIEXMessage(final IEXMessageType messageType, final byte[] bytes) {
-        final IEXSaleConditionFlag saleConditionFlag = IEXSaleConditionFlag.getSaleConditionFlag(bytes[1]);
+        if (bytes.length != LENGTH) {
+            throw new IEXMessageException(IEXTradeMessage.class, LENGTH);
+        }
+
+        final byte saleConditionFlag = bytes[1];
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));
         final int size = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 18, 22));
@@ -46,8 +52,24 @@ public class IEXTradeMessage extends IEXMessage {
         return new IEXTradeMessage(messageType, saleConditionFlag, timestamp, symbol, size, price, tradeID);
     }
 
-    public IEXSaleConditionFlag getSaleConditionFlag() {
-        return saleConditionFlag;
+    public boolean isISO() {
+        return (saleConditionFlag & 0x80) != 0;
+    }
+
+    public boolean isExtendedHoursTrade() {
+        return (saleConditionFlag & 0x40) != 0;
+    }
+
+    public boolean isOddLotTrade() {
+        return (saleConditionFlag & 0x20) != 0;
+    }
+
+    public boolean isNotTradeThrough() {
+        return (saleConditionFlag & 0x10) != 0;
+    }
+
+    public boolean isSinglePriceCrossTrade() {
+        return (saleConditionFlag & 0x08) != 0;
     }
 
     public long getTimestamp() {

@@ -31,9 +31,10 @@ public class IEXAuctionInformationMessageTest {
         final IEXPrice lowerAuctionCollar = new IEXPrice(1234L);
         final IEXPrice upperAuctionCollar = new IEXPrice(1234L);
 
-        final byte[] bytes = IEXByteTestUtil.prepareBytes(80, IEXMessageType.AUCTION_INFORMATION, auctionType, timestamp,
-                symbol, pairedShares, referencePrice, indicativeClearingPrice, imbalanceShares, side, extensionNumber,
-                eventTime, auctionBookClearingPrice, collarReferencePrice, lowerAuctionCollar, upperAuctionCollar);
+        final byte[] bytes = IEXByteTestUtil.prepareBytes(IEXAuctionInformationMessage.LENGTH,
+                IEXMessageType.AUCTION_INFORMATION, auctionType, timestamp, symbol, pairedShares, referencePrice,
+                indicativeClearingPrice, imbalanceShares, side, extensionNumber, eventTime, auctionBookClearingPrice,
+                collarReferencePrice, lowerAuctionCollar, upperAuctionCollar);
         final IEXAuctionInformationMessage message = IEXAuctionInformationMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.AUCTION_INFORMATION);

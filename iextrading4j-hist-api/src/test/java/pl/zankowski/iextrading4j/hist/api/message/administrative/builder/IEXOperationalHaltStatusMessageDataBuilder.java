@@ -8,26 +8,37 @@ import pl.zankowski.iextrading4j.hist.api.util.IEXByteTestUtil;
 
 public class IEXOperationalHaltStatusMessageDataBuilder implements TestDataBuilder {
 
-    private IEXOperationalHaltStatus operationalHaltStatus = IEXOperationalHaltStatus.NOT_OPERATIONAL_HALTED;
+    private IEXOperationalHaltStatus status = IEXOperationalHaltStatus.NOT_OPERATIONAL_HALTED;
     private long timestamp = 1494855059287436131L;
-    private String symbol = "SNAP    ";
+    private String symbol = "SNAP";
 
     public static IEXOperationalHaltStatusMessage defaultHaltStatusMessage() {
         return haltStatusMessage().build();
-    }
-
-    public static byte[] haltStatusBytes() {
-        return haltStatusMessage().getBytes();
     }
 
     public static IEXOperationalHaltStatusMessageDataBuilder haltStatusMessage() {
         return new IEXOperationalHaltStatusMessageDataBuilder();
     }
 
+    public IEXOperationalHaltStatusMessageDataBuilder withStatus(final IEXOperationalHaltStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public IEXOperationalHaltStatusMessageDataBuilder withTimestamp(final long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public IEXOperationalHaltStatusMessageDataBuilder withSymbol(final String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(18, IEXMessageType.OPERATIONAL_HALT_STATUS,
-                operationalHaltStatus, timestamp, symbol);
+        return IEXByteTestUtil.prepareBytes(IEXOperationalHaltStatusMessage.LENGTH, IEXMessageType.OPERATIONAL_HALT_STATUS,
+                status, timestamp, symbol);
     }
 
     public IEXOperationalHaltStatusMessage build() {

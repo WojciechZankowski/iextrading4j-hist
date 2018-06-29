@@ -7,7 +7,7 @@
     <groupId>pl.zankowski</groupId>
     <artifactId>iextrading4j-hist</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <name>IEXTrading4j HIST</name>
     <description>IEX Trading library to parse TOPS and DEEP multicast packets</description>
@@ -63,13 +63,13 @@
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-api</artifactId>
-                <version>1.1.0</version>
+                <version>1.2.0</version>
             </dependency>
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-api</artifactId>
-                <version>1.1.0</version>
+                <version>1.2.0</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -77,19 +77,19 @@
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-tops</artifactId>
-                <version>1.1.0</version>
+                <version>1.2.0</version>
             </dependency>
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-deep</artifactId>
-                <version>1.1.0</version>
+                <version>1.2.0</version>
             </dependency>
 
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-hist-samples</artifactId>
-                <version>1.1.0</version>
+                <version>1.2.0</version>
             </dependency>
 
             <dependency>
