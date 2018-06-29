@@ -22,14 +22,14 @@ public class DEEPSample {
     private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
         final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.MICRO);
 
-//        handle.loop(-1, new PacketListener() {
-//            @Override
-//            public void gotPacket(final Packet packet) {
-//                final byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
-//                final IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(data);
-//                System.out.println(block);
-//            }
-//        });
+        handle.loop(-1, new PacketListener() {
+            @Override
+            public void gotPacket(final Packet packet) {
+                final byte[] data = packet.getPayload().getPayload().getPayload().getRawData();
+                final IEXSegment block = IEXDEEPMessageBlock.createIEXSegment(data);
+                System.out.println(block);
+            }
+        });
 
         handle.close();
     }
