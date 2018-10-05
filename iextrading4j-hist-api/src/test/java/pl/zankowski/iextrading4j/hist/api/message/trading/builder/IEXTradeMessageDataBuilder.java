@@ -66,7 +66,7 @@ public class IEXTradeMessageDataBuilder implements TestDataBuilder {
 
     @Override
     public byte[] getBytes() {
-        return IEXByteTestUtil.prepareBytes(IEXTradeMessage.LENGTH, messageType, saleConditionFlag, timestamp, symbol,
+        return IEXByteTestUtil.prepareBytes(IEXTradeMessage.TOPS16_LENGTH, messageType, saleConditionFlag, timestamp, symbol,
                 size, price, tradeID);
     }
 

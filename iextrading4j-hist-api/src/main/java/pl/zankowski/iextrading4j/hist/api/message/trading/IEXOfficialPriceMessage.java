@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.trading;
 
-import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.trading.field.IEXPriceType;
@@ -33,10 +32,6 @@ public class IEXOfficialPriceMessage extends IEXMessage {
     }
 
     public static IEXOfficialPriceMessage createIEXMessage(final byte[] bytes) {
-        if (bytes.length != LENGTH) {
-            throw new IEXMessageException(IEXOfficialPriceMessage.class, LENGTH);
-        }
-
         final IEXPriceType priceType = IEXPriceType.getPriceType(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

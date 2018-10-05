@@ -1,6 +1,5 @@
 package pl.zankowski.iextrading4j.hist.api.message.administrative;
 
-import pl.zankowski.iextrading4j.hist.api.exception.IEXMessageException;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.administrative.field.IEXTradingStatus;
 import pl.zankowski.iextrading4j.hist.api.util.IEXByteConverter;
@@ -32,10 +31,6 @@ public class IEXTradingStatusMessage extends IEXMessage {
     }
 
     public static IEXTradingStatusMessage createIEXMessage(final byte[] bytes) {
-        if (bytes.length != LENGTH) {
-            throw new IEXMessageException(IEXTradingStatusMessage.class, LENGTH);
-        }
-        
         final IEXTradingStatus tradingStatus = IEXTradingStatus.getTradingStatus(bytes[1]);
         final long timestamp = IEXByteConverter.convertBytesToLong(Arrays.copyOfRange(bytes, 2, 10));
         final String symbol = IEXByteConverter.convertBytesToString(Arrays.copyOfRange(bytes, 10, 18));

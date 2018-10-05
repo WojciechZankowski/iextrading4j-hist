@@ -35,7 +35,7 @@ public class IEXTOPSMessageBlockTest {
                                    IEXQuoteUpdateMessageDataBuilder iexQuoteUpdateMessageDataBuilder) {
         final ByteBuffer byteBuffer = ByteBuffer.allocate(124);
         byteBuffer.put(iexMessageHeaderDataBuilder.getBytes());
-        byteBuffer.put(IEXByteTestUtil.convert((short) IEXTradeMessage.LENGTH));
+        byteBuffer.put(IEXByteTestUtil.convert((short) IEXTradeMessage.TOPS16_LENGTH));
         byteBuffer.put(iexTradeMessageDataBuilder.getBytes());
         byteBuffer.put(IEXByteTestUtil.convert((short) IEXQuoteUpdateMessage.LENGTH));
         byteBuffer.put(iexQuoteUpdateMessageDataBuilder.getBytes());
