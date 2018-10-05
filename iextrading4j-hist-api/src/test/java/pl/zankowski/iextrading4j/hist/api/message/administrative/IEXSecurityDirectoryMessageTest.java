@@ -15,7 +15,6 @@ import static pl.zankowski.iextrading4j.hist.api.message.administrative.builder.
 
 public class IEXSecurityDirectoryMessageTest {
 
-    @Ignore
     @Test
     public void constructor() {
         final byte securityDirectoryFlag = (byte) -64;
@@ -31,38 +30,11 @@ public class IEXSecurityDirectoryMessageTest {
         final IEXSecurityDirectoryMessage message = IEXSecurityDirectoryMessage.createIEXMessage(bytes);
 
         assertThat(message.getMessageType()).isEqualTo(IEXMessageType.SECURITY_DIRECTORY);
-        assertThat(message.isTestSecurity()).isTrue();
-        assertThat(message.isETP()).isFalse();
-        assertThat(message.isWhenIssuedSecurity()).isFalse();
         assertThat(message.getTimestamp()).isEqualTo(timestamp);
         assertThat(message.getSymbol()).isEqualTo(symbol);
         assertThat(message.getRoundLotSize()).isEqualTo(roundLotSize);
         assertThat(message.getAdjustedPOCPrice()).isEqualTo(adjustedPOCPrice);
         assertThat(message.getLuldTier()).isEqualTo(luldTier);
-    }
-
-    @Ignore
-    @Test
-    public void testIsETP() {
-        final IEXSecurityDirectoryMessage message = directoryMessage()
-                .withFlag((byte) -96)
-                .build();
-
-        assertThat(message.isTestSecurity()).isFalse();
-        assertThat(message.isETP()).isTrue();
-        assertThat(message.isWhenIssuedSecurity()).isFalse();
-    }
-
-    @Ignore
-    @Test
-    public void testIsWhenIssuedSecurity() {
-        final IEXSecurityDirectoryMessage message = directoryMessage()
-                .withFlag((byte) -112)
-                .build();
-
-        assertThat(message.isTestSecurity()).isFalse();
-        assertThat(message.isETP()).isFalse();
-        assertThat(message.isWhenIssuedSecurity()).isTrue();
     }
 
     @Test

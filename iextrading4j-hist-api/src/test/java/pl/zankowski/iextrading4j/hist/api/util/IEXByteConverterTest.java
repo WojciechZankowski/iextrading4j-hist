@@ -16,6 +16,14 @@ public class IEXByteConverterTest {
     }
 
     @Test
+    public void shouldSuccessfullyConvertBytesToUnsignedShort() {
+        final int value = 32817;
+        byte[] bytes = IEXByteTestUtil.convertUnsignedShort(value);
+
+        assertThat(IEXByteConverter.convertBytesToUnsignedShort(bytes)).isEqualTo(value);
+    }
+
+    @Test
     public void shouldSuccessfullyConvertBytesToInt() {
         final int value = 123456;
         byte[] bytes = IEXByteTestUtil.convert(value);

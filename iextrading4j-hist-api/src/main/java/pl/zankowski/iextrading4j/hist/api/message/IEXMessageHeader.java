@@ -11,7 +11,7 @@ public class IEXMessageHeader {
     public static final int LENGTH = 40;
 
     private final byte version;
-    private final short messageProtocolID;
+    private final IEXMessageProtocol messageProtocolID;
     private final int channelID;
     private final int sessionID;
     private final short payloadLength;
@@ -22,7 +22,7 @@ public class IEXMessageHeader {
 
     private IEXMessageHeader(
             final byte version,
-            final short messageProtocolID,
+            final IEXMessageProtocol messageProtocolID,
             final int channelID,
             final int sessionID,
             final short payloadLength,
@@ -47,7 +47,8 @@ public class IEXMessageHeader {
         }
 
         final byte version = bytes[0];
-        final short msgProtocolID = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 2, 4));
+        final IEXMessageProtocol msgProtocolID = IEXMessageProtocol.getMessageProtocol(
+                IEXByteConverter.convertBytesToUnsignedShort(Arrays.copyOfRange(bytes, 2, 4)));
         final int channelID = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 4, 8));
         final int sessionID = IEXByteConverter.convertBytesToInt(Arrays.copyOfRange(bytes, 8, 12));
         final short payloadLength = IEXByteConverter.convertBytesToShort(Arrays.copyOfRange(bytes, 12, 14));
@@ -64,7 +65,7 @@ public class IEXMessageHeader {
         return version;
     }
 
-    public short getMessageProtocolID() {
+    public IEXMessageProtocol getMessageProtocolID() {
         return messageProtocolID;
     }
 

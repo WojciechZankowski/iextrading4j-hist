@@ -5,6 +5,7 @@ import pl.zankowski.iextrading4j.hist.api.IEXMessageType;
 import pl.zankowski.iextrading4j.hist.api.field.IEXPrice;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessage;
 import pl.zankowski.iextrading4j.hist.api.message.IEXMessageHeader;
+import pl.zankowski.iextrading4j.hist.api.message.IEXMessageProtocol;
 import pl.zankowski.iextrading4j.hist.test.ExtendedUnitTestBase;
 import pl.zankowski.iextrading4j.hist.tops.IEXTOPSMessageBlock;
 import pl.zankowski.iextrading4j.hist.tops.trading.IEXQuoteUpdateMessage;
@@ -24,6 +25,7 @@ public class TOPS15SegmentTest extends ExtendedUnitTestBase {
 
         final IEXMessageHeader messageHeader = segment.getMessageHeader();
         assertThat(messageHeader.getVersion()).isEqualTo((byte) 1);
+        assertThat(messageHeader.getMessageProtocolID()).isEqualTo(IEXMessageProtocol.TOPS_1_5);
         assertThat(messageHeader.getChannelID()).isEqualTo(1);
         assertThat(messageHeader.getSessionID()).isEqualTo(1144717312);
         assertThat(messageHeader.getPayloadLength()).isEqualTo((short) 44);

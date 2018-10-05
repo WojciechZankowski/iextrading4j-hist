@@ -40,6 +40,13 @@ public class IEXByteTestUtil {
         return buffer.array();
     }
 
+    public static byte[] convertUnsignedShort(final int value) {
+        final ByteBuffer buffer = ByteBuffer.allocate(2);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.putShort((short) value);
+        return buffer.array();
+    }
+
     public static byte[] prepareBytes(final int capacity, final Object... objects) {
         final ByteBuffer byteBuffer = ByteBuffer.allocate(capacity);
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
