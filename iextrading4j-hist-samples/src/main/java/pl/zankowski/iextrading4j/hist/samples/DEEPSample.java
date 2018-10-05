@@ -20,7 +20,7 @@ public class DEEPSample {
     }
 
     private void readDEEPsample() throws PcapNativeException, InterruptedException, NotOpenException {
-        final PcapHandle handle = Pcaps.openOffline("F:\\IEX\\DEEP\\20180622_IEXTP1_DEEP1.0.pcap", PcapHandle.TimestampPrecision.MICRO);
+        final PcapHandle handle = Pcaps.openOffline("path_to_pcap", PcapHandle.TimestampPrecision.MICRO);
 
         handle.loop(-1, new PacketListener() {
             @Override
