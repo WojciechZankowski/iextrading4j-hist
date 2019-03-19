@@ -22,7 +22,7 @@
 
 Java SE 8 is required to use IEXTrading4j HIST library.
 
-```
+```xml
 <dependency>
 	<groupId>pl.zankowski</groupId>
 	<artifactId>iextrading4j-hist-all</artifactId>
@@ -75,7 +75,20 @@ TOPS also provides last trade price and size information. Trades resulting from 
 
 ## Sample
 
-To run samples it is required to have pcap library (Npcap recommended) installed on computer.
+To run samples it is required to have pcap library (Npcap recommended) installed on computer. Make sure to select checkbox "Install with WinPcap API-compatible mode" if you're using Windows.
+You will also need to import org.pcap4j:
+```xml
+    <dependency>
+      <groupId>org.pcap4j</groupId>
+      <artifactId>pcap4j-core</artifactId>
+      <version>1.7.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.pcap4j</groupId>
+      <artifactId>pcap4j-packetfactory-static</artifactId>
+      <version>1.7.5</version>
+    </dependency>
+```
 
 ### TOPS
 
