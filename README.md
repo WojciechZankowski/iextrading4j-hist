@@ -20,7 +20,7 @@
 
 ## Quick Start
 
-Java SE 8 is required to use IEXTrading4j HIST library.
+Java SE 8 or greater is required to use IEXTrading4j HIST library.
 
 ```xml
 <dependency>
