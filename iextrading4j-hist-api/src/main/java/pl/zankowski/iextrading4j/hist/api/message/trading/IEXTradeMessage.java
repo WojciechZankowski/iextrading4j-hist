@@ -69,6 +69,8 @@ public class IEXTradeMessage extends IEXMessage {
         return (saleConditionFlag & 0x08) != 0;
     }
 
+    public byte getSaleConditionFlagRaw() { return saleConditionFlag; }
+
     public long getTimestamp() {
         return timestamp;
     }
