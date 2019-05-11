@@ -56,6 +56,7 @@
         <nexus.staging.maven.plugin>1.6.8</nexus.staging.maven.plugin>
         <maven.clean.plugin>3.0.0</maven.clean.plugin>
         <jacoco.maven.plugin>0.8.2</jacoco.maven.plugin>
+        <jmh.version>1.21</jmh.version>
     </properties>
 
     <dependencyManagement>
@@ -95,7 +96,7 @@
             <dependency>
                 <groupId>pl.zankowski</groupId>
                 <artifactId>iextrading4j-api</artifactId>
-                <version>2.1.4</version>
+                <version>3.0.0</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -103,19 +104,19 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>23.0</version>
+                <version>27.1-jre</version>
             </dependency>
 
             <dependency>
                 <groupId>org.openjdk.jmh</groupId>
                 <artifactId>jmh-core</artifactId>
-                <version>1.19</version>
+                <version>${jmh.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.openjdk.jmh</groupId>
                 <artifactId>jmh-generator-annprocess</artifactId>
-                <version>1.19</version>
+                <version>${jmh.version}</version>
             </dependency>
 
             <dependency>
@@ -128,21 +129,21 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>2.7.17</version>
+                <version>2.27.0</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.6.2</version>
+                <version>3.12.2</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
-                <version>3.0</version>
+                <version>3.1.8</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
