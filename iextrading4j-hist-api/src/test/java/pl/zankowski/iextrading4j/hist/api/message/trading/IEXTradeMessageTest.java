@@ -32,6 +32,7 @@ public class IEXTradeMessageTest {
         assertThat(message.getSize()).isEqualTo(size);
         assertThat(message.getPrice()).isEqualTo(price);
         assertThat(message.getTradeID()).isEqualTo(tradeID);
+        assertThat(message.getSaleConditionFlag()).isEqualTo(saleConditionFlag);
     }
 
     @Test
