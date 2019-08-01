@@ -140,3 +140,7 @@ Code and documentation released under the Apache License, Version 2.0
 Data provided for free by [IEX](https://iextrading.com/developer).
 
 IEX Trading API Exhibit A: [Exhibit A](https://iextrading.com/api-exhibit-a)
+
+## Donations
+
+To support this repository: bc1qv6cz6t302qvamxlhyr3m7mdwrnc7anqc35wp3t
